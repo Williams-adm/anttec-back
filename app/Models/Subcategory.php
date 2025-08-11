@@ -11,6 +11,11 @@ class Subcategory extends Model
     protected $fillable = [
         'name',
         'status',
+        'category_id'
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
     ];
 
     public function category(): BelongsTo

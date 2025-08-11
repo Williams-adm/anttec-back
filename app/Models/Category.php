@@ -12,6 +12,10 @@ class Category extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     public function subcategories(): HasMany
     {
         return $this->hasMany(Subcategory::class)->chaperone();
