@@ -12,6 +12,10 @@ class Brand extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class)->chaperone();
