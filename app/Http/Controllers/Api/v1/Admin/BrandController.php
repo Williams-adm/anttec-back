@@ -4,23 +4,34 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Requests\Api\v1\Admin\Brand\StoreBrandRequest;
 use App\Http\Requests\Api\v1\Admin\Brand\UpdateBrandRequest;
+use App\Http\Resources\Api\v1\Admin\BrandResource;
 use App\Services\Api\v1\Admin\BrandService;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\JsonResponse;
 
 class BrandController extends BaseController
 {
     public function __construct(BrandService $service)
     {
-        parent::__construct($service);
+        parent::__construct($service, BrandResource::class);
     }
 
-    public function store(StoreBrandRequest $request): JsonResource
+    public function store(StoreBrandRequest $request): JsonResponse
     {
-        return $this->service->create($request->validated());
+        $response = $this->service->create($request->validated());
+
+        return response()->json([
+            'message' => 'Registro creado',
+            'data' => new BrandResource($response),
+        ], 201);
     }
 
-    public function update(UpdateBrandRequest $request, int $id): JsonResource
+    public function update(UpdateBrandRequest $request, int $id): JsonResponse
     {
-        return $this->service->update($request->validated(), $id);
+        $model = $this->service->update($request->validated(), $id);
+
+        return response()->json([
+            'message' => 'Registro actualizado',
+            'data' => new BrandResource($model),
+        ], 200);
     }
 }

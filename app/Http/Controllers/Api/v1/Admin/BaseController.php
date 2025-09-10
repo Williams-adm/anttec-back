@@ -4,23 +4,37 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\Api\v1\Admin\BaseService;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\JsonResponse;
 
 abstract class BaseController extends Controller
 {
     public function __construct(
-        protected BaseService $service
+        protected BaseService $service,
+        protected string $resourceClass
     ){}
 
     //aqui deberia pasar el paginate
-    public function index(): ResourceCollection
+    public function index(): JsonResponse
     {
-        return $this->service->getAll();
+        $array = $this->resourceClass::collection(
+            $this->service->getAll()
+        )->response()->getData(true);
+
+        return response()->json([
+            'message' => 'Listado exitoso',
+            'data' => $array['data'],
+            'links' => $array['links'],
+            'meta' => $array['meta'],
+        ], 200);
     }
 
-    public function show(string $id): JsonResource
+    public function show(string $id): JsonResponse
     {
-        return $this->service->getById($id);
+        $model = $this->service->getById($id);
+
+        return response()->json([
+            'message' => 'Exitoso',
+            'data' => new ($this->resourceClass)($model),
+        ], 200);
     }
 }

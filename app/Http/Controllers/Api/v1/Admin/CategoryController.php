@@ -4,23 +4,35 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Requests\Api\v1\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Api\v1\Admin\Category\UpdateCategoryRequest;
+use App\Http\Resources\Api\v1\Admin\CategoryResource;
 use App\Services\Api\v1\Admin\CategoryService;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Exception;
+use Illuminate\Http\JsonResponse;
 
 class CategoryController extends BaseController
 {
     public function __construct(CategoryService $service)
     {
-        parent::__construct($service);
+        parent::__construct($service, CategoryResource::class);
     }
 
-    public function store(StoreCategoryRequest $request): JsonResource
+    public function store(StoreCategoryRequest $request): JsonResponse
     {
-        return $this->service->create($request->validated());
+        $response = $this->service->create($request->validated());
+
+        return response()->json([
+            'message' => 'Registro creado',
+            'data' => new CategoryResource($response),
+        ], 201);
     }
 
-    public function update(UpdateCategoryRequest $request, int $id): JsonResource
+    public function update(UpdateCategoryRequest $request, int $id): JsonResponse
     {
-        return $this->service->update($request->validated(), $id);
+        $model = $this->service->update($request->validated(), $id);
+
+        return response()->json([
+            'message' => 'Registro actualizado',
+            'data' => new CategoryResource($model),
+        ], 200);
     }
 }

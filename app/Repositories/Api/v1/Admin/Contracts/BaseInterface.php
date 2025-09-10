@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface BaseInterface {
     public function getAll(int $pagination): LengthAwarePaginator;
-    public function getById(int $id): Model;
+    public function getById(int $id): ?Model;
     public function create(array $data): Model;
-    public function update(array $data, int $id): Model;
+    public function update(array $data, int $id): ?Model;
 }

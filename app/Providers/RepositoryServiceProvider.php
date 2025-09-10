@@ -10,6 +10,8 @@ use App\Repositories\Api\v1\Admin\Contracts\BrandInterface;
 use App\Repositories\Api\v1\Admin\Contracts\CategoryInterface;
 use App\Repositories\Api\v1\Admin\Contracts\SubcategoryInterface;
 use App\Repositories\Api\v1\Admin\SubcategoryRepository;
+use App\Repositories\Api\v1\Auth\AuthRepository;
+use App\Repositories\Api\v1\Auth\Contracts\AuthInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(AuthInterface::class, AuthRepository::class);
         $this->app->bind(BaseInterface::class, BaseRepository::class);
         $this->app->bind(CategoryInterface::class, CategoryRepository::class);
         $this->app->bind(SubcategoryInterface::class, SubcategoryRepository::class);

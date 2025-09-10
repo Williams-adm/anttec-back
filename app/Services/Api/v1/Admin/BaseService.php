@@ -2,42 +2,46 @@
 
 namespace App\Services\Api\v1\Admin;
 
+use App\Exceptions\Api\v1\NotFoundException;
 use App\Repositories\Api\v1\Admin\Contracts\BaseInterface;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseService
 {
     public function __construct(
         protected BaseInterface $repository,
-        protected string $resourceClass,
     ){}
 
-    public function getAll(int $pagination = 15): ResourceCollection
+    public function getAll(int $pagination = 15): LengthAwarePaginator
     {
-        return $this->resourceClass::collection(
-            $this->repository->getAll($pagination)
-        );
+        return $this->repository->getAll($pagination);
     }
 
-    public function getById(int $id): JsonResource
+    public function getById(int $id): ?Model
     {
-        return new $this->resourceClass(
-            $this->repository->getById($id)
-        );
+        $model = $this->repository->getById($id);
+
+        if(!$model) {
+            throw new NotFoundException();
+        }
+
+        return $model;
     }
 
-    public function create(array $data): JsonResource
+    public function create(array $data): Model
     {
-        return new ($this->resourceClass)(
-            $this->repository->create($data)
-        );
+        return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): JsonResource
+    public function update(array $data, int $id): ?Model
     {
-        return new ($this->resourceClass)(
-            $this->repository->update($data, $id)
-        );
+        $model = $this->repository->update($data, $id);
+
+        if (!$model) {
+            throw new NotFoundException();
+        }
+
+        return $model;
     }
 }

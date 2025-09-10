@@ -17,21 +17,24 @@ abstract class BaseRepository implements BaseInterface
         return $this->model->paginate($pagination);
     }
 
-    public function getById(int $id): Model
+    public function getById(int $id): ?Model
     {
-        return $this->model->findOrFail($id);
+        return $this->model->find($id);
     }
 
     public function create(array $data): Model
     {
-        $model = $this->model->create($data);
-        return $model->refresh();
+        return $this->model->create($data)->refresh();
     }
 
-    public function update(array $data, int $id): Model
+    public function update(array $data, int $id): ?Model
     {
-        $model = $this->model->findOrFail($id);
-        $model->update($data);
+        $model = $this->model->find($id);
+
+        if ($model) {
+            $model->update($data);
+        }
+
         return $model;
     }
 }
