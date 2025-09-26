@@ -13,24 +13,26 @@ class AuthController extends Controller
 {
     public function __construct(
         protected AuthService $service
-    ){}
+    ) {}
 
-    public function login (LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         $result = $this->service->login($request->validated());
 
         return response()->json([
+            'success' => true,
             'message' => 'Login exitoso',
             'token' => $result['token'],
             'user' => new LoginResource($result['user']),
         ], 200);
     }
 
-    public function logout (Request $request): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         $this->service->logout($request->user());
 
         return response()->json([
+            'success' => true,
             'message' => 'Sesión cerrada'
         ], 200);
     }

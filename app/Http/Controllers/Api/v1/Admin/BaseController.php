@@ -11,7 +11,7 @@ abstract class BaseController extends Controller
     public function __construct(
         protected BaseService $service,
         protected string $resourceClass
-    ){}
+    ) {}
 
     //aqui deberia pasar el paginate
     public function index(): JsonResponse
@@ -21,6 +21,7 @@ abstract class BaseController extends Controller
         )->response()->getData(true);
 
         return response()->json([
+            'success' => true,
             'message' => 'Listado exitoso',
             'data' => $array['data'],
             'links' => $array['links'],
@@ -33,6 +34,7 @@ abstract class BaseController extends Controller
         $model = $this->service->getById($id);
 
         return response()->json([
+            'success' => true,
             'message' => 'Exitoso',
             'data' => new ($this->resourceClass)($model),
         ], 200);
