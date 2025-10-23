@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Cover extends Model
 {
@@ -12,5 +13,15 @@ class Cover extends Model
         'end_at',
         'status',
         'order',
+        'status'
     ];
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

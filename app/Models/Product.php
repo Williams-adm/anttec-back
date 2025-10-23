@@ -11,6 +11,8 @@ class Product extends Model
         'name',
         'description',
         'status',
+        'subcategory_id',
+        'brand_id'
     ];
 
     public function subcategory(): BelongsTo

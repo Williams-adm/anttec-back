@@ -4,8 +4,9 @@ namespace App\Http\Resources\Api\v1\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
-class SubcategoryResource extends JsonResource
+class CoverResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +17,12 @@ class SubcategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'category' => $this->category->name,
+            'title' => $this->title,
+            'start_at' => $this->start_at,
+            'end_at' => $this->end_at,
             'status' => $this->status,
+            'order' => $this->order,
+            'image' => Storage::url($this->image->path)
         ];
     }
 }

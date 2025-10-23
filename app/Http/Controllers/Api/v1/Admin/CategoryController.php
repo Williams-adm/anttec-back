@@ -6,7 +6,6 @@ use App\Http\Requests\Api\v1\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Api\v1\Admin\Category\UpdateCategoryRequest;
 use App\Http\Resources\Api\v1\Admin\CategoryResource;
 use App\Services\Api\v1\Admin\CategoryService;
-use Exception;
 use Illuminate\Http\JsonResponse;
 
 class CategoryController extends BaseController
@@ -21,6 +20,7 @@ class CategoryController extends BaseController
         $response = $this->service->create($request->validated());
 
         return response()->json([
+            'success' => true,
             'message' => 'Registro creado',
             'data' => new CategoryResource($response),
         ], 201);
@@ -31,6 +31,7 @@ class CategoryController extends BaseController
         $model = $this->service->update($request->validated(), $id);
 
         return response()->json([
+            'success' => true,
             'message' => 'Registro actualizado',
             'data' => new CategoryResource($model),
         ], 200);

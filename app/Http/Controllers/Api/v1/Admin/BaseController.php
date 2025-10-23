@@ -22,10 +22,23 @@ abstract class BaseController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Listado exitoso',
+            'message' => 'Listado paginado exitoso',
             'data' => $array['data'],
             'links' => $array['links'],
             'meta' => $array['meta'],
+        ], 200);
+    }
+
+    public function getAllList(): JsonResponse
+    {
+        $array = $this->resourceClass::collection(
+            $this->service->getAllList()
+        )->response()->getData(true);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Listado exitoso',
+            'data' => $array['data'],
         ], 200);
     }
 

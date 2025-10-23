@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Admin\Subcategory;
+namespace App\Http\Requests\Api\v1\Admin\Product;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreSubcategoryRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,15 +25,22 @@ class StoreSubcategoryRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'between:3, 80',
-                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/',
-                Rule::unique('subcategories', 'name')
-                ->where(fn(Builder $query) => $query->where('category_id', $this->category_id))
-                //modificar el mensaje que devuelve
+                'string',
+                'between:3, 100',
+                'unique:products,name'
             ],
-            'category_id' => [
+            'description' => [
+                'nullable',
+                'string',
+                'min:10'
+            ],
+            'subcategory_id' => [
                 'required',
-                'exists:categories,id'
+                'exists:subcategories,id'
+            ],
+            'brand_id' => [
+                'required',
+                'exists:brands,id'
             ]
         ];
     }

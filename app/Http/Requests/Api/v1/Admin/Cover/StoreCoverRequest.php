@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Admin\Subcategory;
+namespace App\Http\Requests\Api\v1\Admin\Cover;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
-class StoreSubcategoryRequest extends FormRequest
+class StoreCoverRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,24 @@ class StoreSubcategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
+            'title' => [
                 'required',
-                'between:3, 80',
-                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/',
-                Rule::unique('subcategories', 'name')
-                ->where(fn(Builder $query) => $query->where('category_id', $this->category_id))
-                //modificar el mensaje que devuelve
+                'string',
+                'between:3, 100',
+                'unique:covers,title'
+
             ],
-            'category_id' => [
+            'start_at' => [
                 'required',
-                'exists:categories,id'
+                Rule::date()->afterOrEqual(today())
+            ],
+            'end_at' => [
+                'nullable',
+                Rule::date()->afterOrEqual($this->input('start_at'))
+            ],
+            'image' => [
+                'required',
+                File::image()
             ]
         ];
     }

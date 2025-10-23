@@ -20,6 +20,7 @@ class SubcategoryController extends BaseController
         $response = $this->service->create($request->validated());
 
         return response()->json([
+            'success' => true,
             'message' => 'Registro creado',
             'data' => new SubcategoryResource($response),
         ], 201);
@@ -30,6 +31,7 @@ class SubcategoryController extends BaseController
         $model = $this->service->update($request->validated(), $id);
 
         return response()->json([
+            'success' => true,
             'message' => 'Registro actualizado',
             'data' => new SubcategoryResource($model),
         ], 200);

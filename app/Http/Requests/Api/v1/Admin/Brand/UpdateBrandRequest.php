@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\v1\Admin\Brand;
 
+use App\Exceptions\Api\v1\NotFoundException;
+use App\Models\Brand;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,5 +38,13 @@ class UpdateBrandRequest extends FormRequest
                 'boolean:strict'
             ]
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $id = $this->route('brand');
+        if (!Brand::find($id)) {
+            throw new NotFoundException();
+        }
     }
 }

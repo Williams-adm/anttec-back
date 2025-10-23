@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name', length: 100)->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('status')->default(true);
 
             $table->foreignId('subcategory_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('brands_id')->constrained()
+            $table->foreignId('brand_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();
