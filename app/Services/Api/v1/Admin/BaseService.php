@@ -8,11 +8,24 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @template T of BaseInterface
+ */
 abstract class BaseService
 {
+    /**
+     * @var T
+     */
+    protected $repository;
+
+    /**
+     * @param T $repository
+     */
     public function __construct(
-        protected BaseInterface $repository,
-    ){}
+        BaseInterface $repository,
+    ){
+        $this->repository = $repository;
+    }
 
     public function getAll(int $pagination = 15): LengthAwarePaginator
     {
@@ -37,6 +50,7 @@ abstract class BaseService
 
     public function create(array $data): Model
     {
+        dd($data);
         return $this->repository->create($data);
     }
 

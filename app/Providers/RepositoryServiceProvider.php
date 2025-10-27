@@ -10,9 +10,11 @@ use App\Repositories\Api\v1\Admin\Contracts\BrandInterface;
 use App\Repositories\Api\v1\Admin\Contracts\CategoryInterface;
 use App\Repositories\Api\v1\Admin\Contracts\CoverInterface;
 use App\Repositories\Api\v1\Admin\Contracts\ProductInterface;
+use App\Repositories\Api\v1\Admin\Contracts\SpecificationInterface;
 use App\Repositories\Api\v1\Admin\Contracts\SubcategoryInterface;
 use App\Repositories\Api\v1\Admin\CoverRepository;
 use App\Repositories\Api\v1\Admin\ProductRepository;
+use App\Repositories\Api\v1\Admin\SpecificationRepository;
 use App\Repositories\Api\v1\Admin\SubcategoryRepository;
 use App\Repositories\Api\v1\Auth\AuthRepository;
 use App\Repositories\Api\v1\Auth\Contracts\AuthInterface;
@@ -32,6 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BrandInterface::class, BrandRepository::class);
         $this->app->bind(ProductInterface::class, ProductRepository::class);
         $this->app->bind(CoverInterface::class, CoverRepository::class);
+        $this->app->bind(SpecificationInterface::class, SpecificationRepository::class);
     }
 
     /**

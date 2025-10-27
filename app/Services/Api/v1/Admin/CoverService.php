@@ -3,16 +3,20 @@
 namespace App\Services\Api\v1\Admin;
 
 use App\Exceptions\Api\v1\InternalServerErrorException;
-use App\Http\Resources\Api\v1\Admin\CoverResource;
+use App\Exceptions\Api\v1\NotFoundException;
 use App\Repositories\Api\v1\Admin\Contracts\CoverInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @extends BaseService<CoverInterface>
+ */
 class CoverService extends BaseService
 {
     public function __construct(CoverInterface $repository)
     {
-        parent::__construct($repository, CoverResource::class);
+        parent::__construct($repository);
     }
 
     public function create(array $data): Model
@@ -31,5 +35,51 @@ class CoverService extends BaseService
                 $e->getMessage()
             );
         }
+    }
+
+    public function update(array $data, int $id): ?Model
+    {
+        $cover = $this->repository->getById($id);
+
+        try {
+            if(isset($data['image']) && Storage::exists($cover->image->path)) {
+                if($cover->image->path) {
+                    Storage::delete($cover->image->path);
+                }
+                $path = Storage::putFile('covers', $data['image']);
+            }
+
+            $coverData = Arr::only($data, [
+                'title',
+                'start_at',
+                'end_at',
+                'status',
+            ]);
+
+            $imageData = Arr::only($data, ['image']);
+
+            $cover = $this->repository->updateWithImage($coverData, $imageData, $id);
+
+            if (!$cover) {
+                throw new NotFoundException();
+            }
+
+            return $cover;
+
+        } catch (\Exception $e) {
+            if (isset($path)) {
+                Storage::delete($path);
+            }
+
+            throw new InternalServerErrorException(
+                'No se pudo actualizar la portada',
+                $e->getMessage()
+            );
+        }
+    }
+
+    public function reorder(array $orderIds): void
+    {
+        $this->repository->reorder($orderIds);
     }
 }

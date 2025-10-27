@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Admin\Cover;
+namespace App\Http\Requests\Api\v1\Admin\Specification;
 
 use App\Exceptions\Api\v1\NotFoundException;
-use App\Models\Cover;
-use App\Rules\Api\v1\Admin\Cover\EndAtDateCover;
+use App\Models\Specification;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\File;
 
-class UpdateCoverRequest extends FormRequest
+class UpdateSpecificationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,40 +25,25 @@ class UpdateCoverRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [
+            'name' => [
                 'sometimes',
                 'required',
-                'string',
                 'between:3, 100',
-                Rule::unique('covers')->ignore($this->route('cover'))
-            ],
-            'start_at' => [
-                'sometimes',
-                'required',
-                Rule::date()->afterOrEqual(today())
-            ],
-            'end_at' => [
-                'sometimes',
-                'nullable',
-                new EndAtDateCover
-            ],
-            'image' => [
-                'sometimes',
-                'required',
-                File::image()
+                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/',
+                Rule::unique('specifications')->ignore($this->route('specification'))
             ],
             'status' => [
                 'sometimes',
+                'required',
                 'boolean:strict'
-            ],
+            ]
         ];
     }
 
     protected function prepareForValidation(): void
     {
-        $id = $this->route('cover');
-        $cover = Cover::find($id);
-        if (!$cover) {
+        $id = $this->route('specification');
+        if (!Specification::find($id)) {
             throw new NotFoundException();
         }
     }

@@ -6,12 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Services\Api\v1\Admin\BaseService;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * @template T of BaseService
+ */
 abstract class BaseController extends Controller
 {
+    /**
+     * @var T
+     */
+    protected $service;
+
+    /**
+     * @param T $service
+     */
     public function __construct(
-        protected BaseService $service,
+        BaseService $service,
         protected string $resourceClass
-    ) {}
+    ) {
+        $this->service = $service;
+    }
 
     //aqui deberia pasar el paginate
     public function index(): JsonResponse

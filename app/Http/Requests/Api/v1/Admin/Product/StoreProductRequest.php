@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\v1\Admin\Product;
 
+use App\Rules\Api\v1\Admin\Product\UniqueSpecificationIds;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -41,6 +42,22 @@ class StoreProductRequest extends FormRequest
             'brand_id' => [
                 'required',
                 'exists:brands,id'
+            ],
+            'specifications' => [
+                'required',
+                'array',
+                'min:1',
+                new UniqueSpecificationIds,
+            ],
+            'specifications.*.specification_id' => [
+                'required',
+                'integer:strict',
+                'exists:specifications,id'
+            ],
+            'specifications.*.value' => [
+                'required',
+                'string',
+                'min:2'
             ]
         ];
     }

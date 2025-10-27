@@ -17,7 +17,7 @@ abstract class BaseRepository implements BaseInterface
     {
         return $this->model->paginate($pagination);
     }
-    
+
     public function getAllList(): Collection
     {
         return $this->model::all();
@@ -37,10 +37,11 @@ abstract class BaseRepository implements BaseInterface
     {
         $model = $this->model->find($id);
 
-        if ($model) {
-            $model->update($data);
+        if (!$model) {
+            return null;
         }
 
+        $model->update($data);
         return $model;
     }
 }

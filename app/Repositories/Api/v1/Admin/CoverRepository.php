@@ -38,8 +38,43 @@ class CoverRepository extends BaseRepository implements CoverInterface
         }
     }
 
-/*     public function update(array $data, int $id): ?Model
+    public function updateWithImage(array $coverData, array $imageData, int $id): ?Model
     {
+        $cover = $this->model->find($id);
 
-    } */
+        if (!$cover) {
+            return null;
+        }
+
+        DB::beginTransaction();
+        try {
+            if(!empty($coverData)) {
+                $cover->update($coverData);
+            }
+
+            if (!empty($imageData) && isset($imageData['image'])) {
+                $cover->image()->update([
+                    'path' => $imageData['image']
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        return $cover->refresh();
+    }
+
+    public function reorder(array $orderIds): void
+    {
+        $covers = Cover::whereIn('id', $orderIds)->get()->keyBy('id');
+
+        foreach ($orderIds as $index => $id) {
+            if (isset($covers[$id])) {
+                $covers[$id]->update(['order' => $index + 1]);
+            }
+        }
+    }
 }

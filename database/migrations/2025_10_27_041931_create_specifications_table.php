@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('covers', function (Blueprint $table) {
+        Schema::create('specifications', function (Blueprint $table) {
             $table->id();
-            $table->string('title', length: 100)->unique();
-            $table->date('start_at');
-            $table->date('end_at')->nullable();
+            $table->string('name', length: 100)->unique();
             $table->boolean('status')->default(true);
-            $table->unsignedInteger('order')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('covers');
+        Schema::dropIfExists('specifications');
     }
 };

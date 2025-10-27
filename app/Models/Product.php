@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -15,6 +16,10 @@ class Product extends Model
         'brand_id'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(Subcategory::class);
@@ -23,5 +28,10 @@ class Product extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function specifications(): BelongsToMany
+    {
+        return $this->belongsToMany(Specification::class)->withPivot('value');
     }
 }
