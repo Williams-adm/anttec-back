@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface CoverInterface extends BaseInterface
 {
-    public function updateWithImage(array $coverData, array $imageData, int $id): ?Model;
+    public function create(array $data): Model;
+    public function update(array $coverData, array $imageData, int $id): ?Model;
     public function reorder(array $orderIds): void;
 }

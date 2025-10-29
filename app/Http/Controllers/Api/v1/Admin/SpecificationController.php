@@ -8,6 +8,9 @@ use App\Http\Resources\Api\v1\Admin\SpecificationResource;
 use App\Services\Api\v1\Admin\SpecificationService;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * @extends BaseController<SpecificationService>
+ */
 class SpecificationController extends BaseController
 {
     public function __construct(SpecificationService $service)

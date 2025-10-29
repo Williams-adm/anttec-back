@@ -47,21 +47,4 @@ abstract class BaseService
 
         return $model;
     }
-
-    public function create(array $data): Model
-    {
-        dd($data);
-        return $this->repository->create($data);
-    }
-
-    public function update(array $data, int $id): ?Model
-    {
-        $model = $this->repository->update($data, $id);
-
-        if (!$model) {
-            throw new NotFoundException();
-        }
-
-        return $model;
-    }
 }

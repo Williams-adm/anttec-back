@@ -21,7 +21,14 @@ class ProductResource extends JsonResource
             'status' => $this->status,
             'category' => $this->subcategory->category->name,
             'subcategory' => $this->subcategory->name,
-            'brand' => $this->brand->name
+            'brand' => $this->brand->name,
+            'specifications' => $this->specifications->map(function ($spec) {
+                return [
+                    'id' => $spec->id,
+                    'name' => $spec->name,
+                    'value' => $spec->pivot->value,
+                ];
+            }),
         ];
     }
 }

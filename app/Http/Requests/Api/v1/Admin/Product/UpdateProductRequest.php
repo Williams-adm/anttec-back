@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\v1\Admin\Product;
 
 use App\Exceptions\Api\v1\NotFoundException;
 use App\Models\Product;
+use App\Rules\Api\v1\Admin\Product\UniqueSpecificationIds;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -41,12 +42,33 @@ class UpdateProductRequest extends FormRequest
                 'boolean:strict'
             ],
             'subcategory_id' => [
+                'sometimes',
                 'required',
                 'exists:subcategories,id'
             ],
             'brand_id' => [
+                'sometimes',
                 'required',
                 'exists:brands,id'
+            ],
+            'specifications' => [
+                'sometimes',
+                'required',
+                'array',
+                'min:1',
+                new UniqueSpecificationIds,
+            ],
+            'specifications.*.specification_id' => [
+                'sometimes',
+                'required',
+                'integer:strict',
+                'exists:specifications,id'
+            ],
+            'specifications.*.value' => [
+                'sometimes',
+                'required',
+                'string',
+                'min:2'
             ]
         ];
     }

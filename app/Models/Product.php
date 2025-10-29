@@ -32,6 +32,6 @@ class Product extends Model
 
     public function specifications(): BelongsToMany
     {
-        return $this->belongsToMany(Specification::class)->withPivot('value');
+        return $this->belongsToMany(Specification::class)->withPivot('value')->withTimestamps();
     }
 }

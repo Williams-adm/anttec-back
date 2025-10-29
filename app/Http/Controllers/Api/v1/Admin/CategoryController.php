@@ -8,6 +8,9 @@ use App\Http\Resources\Api\v1\Admin\CategoryResource;
 use App\Services\Api\v1\Admin\CategoryService;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * @extends BaseController<CategoryService>
+ */
 class CategoryController extends BaseController
 {
     public function __construct(CategoryService $service)

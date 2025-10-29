@@ -41,6 +41,10 @@ class CoverService extends BaseService
     {
         $cover = $this->repository->getById($id);
 
+        if (!$cover) {
+            throw new NotFoundException();
+        }
+
         try {
             if(isset($data['image']) && Storage::exists($cover->image->path)) {
                 if($cover->image->path) {
@@ -58,11 +62,7 @@ class CoverService extends BaseService
 
             $imageData = Arr::only($data, ['image']);
 
-            $cover = $this->repository->updateWithImage($coverData, $imageData, $id);
-
-            if (!$cover) {
-                throw new NotFoundException();
-            }
+            $cover = $this->repository->update($coverData, $imageData, $id);
 
             return $cover;
 

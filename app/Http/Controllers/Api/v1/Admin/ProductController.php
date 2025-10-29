@@ -8,6 +8,9 @@ use App\Http\Resources\Api\v1\Admin\ProductResource;
 use App\Services\Api\v1\Admin\ProductService;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * @extends BaseController<ProductService>
+ */
 class ProductController extends BaseController
 {
     public function __construct(ProductService $service)

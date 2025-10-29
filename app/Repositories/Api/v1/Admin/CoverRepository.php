@@ -38,7 +38,7 @@ class CoverRepository extends BaseRepository implements CoverInterface
         }
     }
 
-    public function updateWithImage(array $coverData, array $imageData, int $id): ?Model
+    public function update(array $coverData, array $imageData, int $id): ?Model
     {
         $cover = $this->model->find($id);
 

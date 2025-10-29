@@ -8,6 +8,9 @@ use App\Http\Resources\Api\v1\Admin\BrandResource;
 use App\Services\Api\v1\Admin\BrandService;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * @extends BaseController<BrandService>
+ */
 class BrandController extends BaseController
 {
     public function __construct(BrandService $service)

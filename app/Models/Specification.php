@@ -18,6 +18,6 @@ class Specification extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot('value');
+        return $this->belongsToMany(Product::class)->withPivot('value')->withTimestamps();
     }
 }
