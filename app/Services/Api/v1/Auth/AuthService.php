@@ -2,8 +2,8 @@
 
 namespace App\Services\Api\v1\Auth;
 
+use App\Contracts\Api\v1\Auth\AuthInterface;
 use App\Exceptions\Api\v1\Auth\InvalidCredentialsException;
-use App\Repositories\Api\v1\Auth\Contracts\AuthInterface;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService

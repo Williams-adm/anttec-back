@@ -2,9 +2,9 @@
 
 namespace App\Services\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\CoverInterface;
 use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
-use App\Repositories\Api\v1\Admin\Contracts\CoverInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;

@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\BrandInterface;
 use App\Models\Brand;
-use App\Repositories\Api\v1\Admin\Contracts\BrandInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class BrandRepository extends BaseRepository implements BrandInterface

@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\CategoryInterface;
 use App\Models\Category;
-use App\Repositories\Api\v1\Admin\Contracts\CategoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class CategoryRepository extends BaseRepository implements CategoryInterface

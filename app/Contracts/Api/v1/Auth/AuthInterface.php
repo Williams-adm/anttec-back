@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Repositories\Api\v1\Auth\Contracts;
+namespace App\Contracts\Api\v1\Auth;
 
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 
 interface AuthInterface {
     public function finByEmail(string $email): ?User;

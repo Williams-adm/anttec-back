@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\SpecificationInterface;
 use App\Models\Specification;
-use App\Repositories\Api\v1\Admin\Contracts\SpecificationInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class SpecificationRepository extends BaseRepository implements SpecificationInterface

@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Models\Product;
-use App\Repositories\Api\v1\Admin\Contracts\ProductInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +27,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
 
             foreach ($data['specifications'] as $specification) {
                 $product->specifications()->attach(
-                    $specification['specification_id'],
+                    ['specification_id' => $specification['specification_id']],
                     ['value' => $specification['value']]
                 );
             }

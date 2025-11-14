@@ -2,8 +2,8 @@
 
 namespace App\Services\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\SubcategoryInterface;
 use App\Exceptions\Api\v1\NotFoundException;
-use App\Repositories\Api\v1\Admin\Contracts\SubcategoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**

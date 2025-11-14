@@ -34,4 +34,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Specification::class)->withPivot('value')->withTimestamps();
     }
+
+    public function options(): BelongsToMany
+    {
+        return $this->belongsToMany(Option::class)->using(OptionProduct::class)->withPivot('id')->withTimestamps();
+    }
 }

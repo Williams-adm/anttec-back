@@ -4,7 +4,6 @@ namespace App\Http\Requests\Api\v1\Admin\Product;
 
 use App\Rules\Api\v1\Admin\Product\UniqueSpecificationIds;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -37,10 +36,12 @@ class StoreProductRequest extends FormRequest
             ],
             'subcategory_id' => [
                 'required',
+                'integer:strict',
                 'exists:subcategories,id'
             ],
             'brand_id' => [
                 'required',
+                'integer:strict',
                 'exists:brands,id'
             ],
             'specifications' => [

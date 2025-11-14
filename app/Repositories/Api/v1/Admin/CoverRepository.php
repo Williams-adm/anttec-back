@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\CoverInterface;
 use App\Models\Cover;
-use App\Repositories\Api\v1\Admin\Contracts\CoverInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 

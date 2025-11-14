@@ -29,7 +29,7 @@ class ReorderCoverRequest extends FormRequest
                 'min:1'
             ],
             'sorts.*' => [
-                'integer',
+                'integer:strict',
                 Rule::exists('covers', 'id')
             ],
         ];

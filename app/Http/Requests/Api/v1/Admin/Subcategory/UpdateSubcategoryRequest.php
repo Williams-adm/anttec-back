@@ -37,6 +37,7 @@ class UpdateSubcategoryRequest extends FormRequest
             'category_id' => [
                 'sometimes',
                 'required',
+                'integer:strict',
                 'exists:categories,id'
             ],
             'status' => [

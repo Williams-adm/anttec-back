@@ -33,6 +33,7 @@ class StoreSubcategoryRequest extends FormRequest
                 //modificar el mensaje que devuelve
             ],
             'category_id' => [
+                'integer:strict',
                 'required',
                 'exists:categories,id'
             ]

@@ -2,8 +2,8 @@
 
 namespace App\Services\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\BaseInterface;
 use App\Exceptions\Api\v1\NotFoundException;
-use App\Repositories\Api\v1\Admin\Contracts\BaseInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

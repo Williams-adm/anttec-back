@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
-use App\Repositories\Api\v1\Admin\Contracts\BaseInterface;
+use App\Contracts\Api\v1\Admin\BaseInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Api\v1\Admin;
 
+use App\Contracts\Api\v1\Admin\SubcategoryInterface;
 use App\Models\Subcategory;
-use App\Repositories\Api\v1\Admin\Contracts\SubcategoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class SubcategoryRepository extends BaseRepository implements SubcategoryInterface

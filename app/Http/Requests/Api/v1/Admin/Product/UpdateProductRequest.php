@@ -44,11 +44,13 @@ class UpdateProductRequest extends FormRequest
             'subcategory_id' => [
                 'sometimes',
                 'required',
+                'integer:strict',
                 'exists:subcategories,id'
             ],
             'brand_id' => [
                 'sometimes',
                 'required',
+                'integer:strict',
                 'exists:brands,id'
             ],
             'specifications' => [
