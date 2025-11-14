@@ -26,7 +26,7 @@ use App\Repositories\Api\v1\Admin\SubcategoryRepository;
 use App\Repositories\Api\v1\Auth\AuthRepository;
 use Illuminate\Support\ServiceProvider;
 
-class RepositoryServiceProvider extends ServiceProvider
+class RepositoryAServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

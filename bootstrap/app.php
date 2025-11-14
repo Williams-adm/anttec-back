@@ -12,6 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         commands: __DIR__.'/../routes/console.php',
         using: function (): void {
+            Route::middleware('api')
+            ->prefix('api/v1/auth')
+            ->name('apiAuth.')
+            ->group(base_path('routes/apiAuth.php'));
+
             Route::middleware('auth:sanctum')
             ->prefix('api/v1/admin')
             ->name('apiAdmin.')
@@ -22,10 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
             ->name('api.')
             ->group(base_path('routes/api.php'));
 
-            Route::middleware('api')
-            ->prefix('api/v1/auth')
-            ->name('apiAuth.')
-            ->group(base_path('routes/apiAuth.php'));
+            Route::middleware('auth:sanctum')
+            ->prefix('api/v1/mobile')
+            ->name('apiMobile.')
+            ->group(base_path('routes/apiMobile.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
