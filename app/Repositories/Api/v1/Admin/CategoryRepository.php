@@ -18,15 +18,10 @@ class CategoryRepository extends BaseRepository implements CategoryInterface
         return $this->model->create($data)->refresh();
     }
 
-    public function update(array $data, int $id): ?Model
+    public function update(array $data, int $id): Model
     {
-        $model = $this->model->find($id);
-
-        if (!$model) {
-            return null;
-        }
-
+        $model = $this->getById($id);
         $model->update($data);
-        return $model;
+        return $model->refresh();
     }
 }

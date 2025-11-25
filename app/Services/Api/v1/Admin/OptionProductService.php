@@ -5,6 +5,7 @@ namespace App\Services\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OptionProductService
 {
@@ -12,15 +13,13 @@ class OptionProductService
         protected OptionProductInterface $repository
     ) {}
 
-    public function getById(int $id): ?Model
+    public function getById(int $id): Model
     {
-        $model = $this->repository->getById($id);
-
-        if (!$model) {
+        try {
+            return $this->repository->getById($id);
+        } catch (ModelNotFoundException $e) {
             throw new NotFoundException();
         }
-
-        return $model;
     }
 
     public function create(array $data): Model

@@ -6,6 +6,7 @@ use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
 /**
@@ -23,26 +24,22 @@ class ProductService extends BaseService
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): ?Model
+    public function update(array $data, int $id): Model
     {
+        $productData = Arr::only($data, [
+            'name',
+            'description',
+            'status',
+            'subcategory_id',
+            'brand_id',
+        ]);
+
+        $specificationsData = Arr::only($data, ['specifications']);
+
         try{
-            $productData = Arr::only($data, [
-                'name',
-                'description',
-                'status',
-                'subcategory_id',
-                'brand_id',
-            ]);
-
-            $specificationsData = Arr::only($data, ['specifications']);
-
-            $model = $this->repository->update($productData, $specificationsData,$id);
-
-            if (!$model) {
-                throw new NotFoundException();
-            }
-
-            return $model;
+            return $this->repository->update($productData, $specificationsData,$id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException();
         } catch (\Exception $e) {
             throw new InternalServerErrorException(
                 'No se pudo actualizar el producto',

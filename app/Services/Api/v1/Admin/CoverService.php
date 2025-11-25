@@ -6,6 +6,7 @@ use App\Contracts\Api\v1\Admin\CoverInterface;
 use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,15 +38,11 @@ class CoverService extends BaseService
         }
     }
 
-    public function update(array $data, int $id): ?Model
+    public function update(array $data, int $id): Model
     {
-        $cover = $this->repository->getById($id);
-
-        if (!$cover) {
-            throw new NotFoundException();
-        }
-
         try {
+            $cover = $this->repository->getById($id);
+            
             if(isset($data['image']) && Storage::exists($cover->image->path)) {
                 if($cover->image->path) {
                     Storage::delete($cover->image->path);
@@ -61,11 +58,10 @@ class CoverService extends BaseService
             ]);
 
             $imageData = Arr::only($data, ['image']);
+            return $this->repository->update($coverData, $imageData, $id);
 
-            $cover = $this->repository->update($coverData, $imageData, $id);
-
-            return $cover;
-
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException();
         } catch (\Exception $e) {
             if (isset($path)) {
                 Storage::delete($path);

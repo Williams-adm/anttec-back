@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class OptionProductRepository implements OptionProductInterface
 {
-    public function getById(int $id): ?Model
+    public function getById(int $id): Model
     {
-        return OptionProduct::find($id);
+        return OptionProduct::findOrFail($id);
     }
 
     public function create(array $data): Model
@@ -39,9 +39,9 @@ class OptionProductRepository implements OptionProductInterface
 
     public function addValues(array $data): Model
     {
-        $optionProduct = $this->getById($data['option_product_id']);
         DB::beginTransaction();
         try {
+            $optionProduct = $this->getById($data['option_product_id']);
             foreach ($data['values'] as $value) {
                 $optionProduct->optionValues()->attach(
                     $value['option_value_id']

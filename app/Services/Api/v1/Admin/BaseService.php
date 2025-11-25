@@ -7,6 +7,7 @@ use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * @template T of BaseInterface
@@ -39,12 +40,10 @@ abstract class BaseService
 
     public function getById(int $id): ?Model
     {
-        $model = $this->repository->getById($id);
-
-        if(!$model) {
+        try {
+            return $this->repository->getById($id);
+        } catch (ModelNotFoundException $e) {
             throw new NotFoundException();
         }
-
-        return $model;
     }
 }

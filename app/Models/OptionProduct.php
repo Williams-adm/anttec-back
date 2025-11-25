@@ -26,6 +26,6 @@ class OptionProduct extends Pivot
             'option_product_value',  // tabla pivot
             'option_product_id',     // FK local
             'option_value_id'        // FK del modelo relacionado
-        )->withTimestamps();
+        )->using(OptionProductValue::class)->withTimestamps();
     }
 }

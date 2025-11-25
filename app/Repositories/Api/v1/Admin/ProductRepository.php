@@ -42,16 +42,12 @@ class ProductRepository extends BaseRepository implements ProductInterface
         }
     }
 
-    public function update(array $productData, $specificationsData, int $id): ?Model
+    public function update(array $productData, $specificationsData, int $id): Model
     {
-        $product = $this->model->find($id);
-
-        if (!$product) {
-            return null;
-        }
-
         DB::beginTransaction();
         try {
+            $product = $this->getById($id);
+            
             if (!empty($productData)) {
                 $product->update($productData);
             }
@@ -67,11 +63,10 @@ class ProductRepository extends BaseRepository implements ProductInterface
             }
 
             DB::commit();
+            return $product->refresh();
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
-
-        return $product->refresh();
     }
 }

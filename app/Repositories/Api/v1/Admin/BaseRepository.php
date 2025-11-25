@@ -23,8 +23,8 @@ abstract class BaseRepository implements BaseInterface
         return $this->model::all();
     }
 
-    public function getById(int $id): ?Model
+    public function getById(int $id): Model
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 }

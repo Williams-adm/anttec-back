@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Phone extends Model
 {
     protected $fillable = [
         'number',
+        'prefix_id',
         'phoneable_id',
         'phoneable_type'
     ];
@@ -18,5 +20,8 @@ class Phone extends Model
         return $this->belongsTo(Prefix::class);
     }
 
-    //falta definir la relacion polimorfica
+    public function phoneable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }

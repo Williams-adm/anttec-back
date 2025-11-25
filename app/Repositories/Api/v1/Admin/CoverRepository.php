@@ -38,16 +38,12 @@ class CoverRepository extends BaseRepository implements CoverInterface
         }
     }
 
-    public function update(array $coverData, array $imageData, int $id): ?Model
+    public function update(array $coverData, array $imageData, int $id): Model
     {
-        $cover = $this->model->find($id);
-
-        if (!$cover) {
-            return null;
-        }
-
         DB::beginTransaction();
         try {
+            $cover = $this->getById($id);
+
             if(!empty($coverData)) {
                 $cover->update($coverData);
             }
@@ -59,12 +55,11 @@ class CoverRepository extends BaseRepository implements CoverInterface
             }
 
             DB::commit();
+            return $cover->refresh();
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
-
-        return $cover->refresh();
     }
 
     public function reorder(array $orderIds): void

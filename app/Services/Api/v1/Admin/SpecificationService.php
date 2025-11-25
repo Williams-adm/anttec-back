@@ -5,6 +5,7 @@ namespace App\Services\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\SpecificationInterface;
 use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * @extends BaseService<SpecificationInterface>
@@ -21,14 +22,12 @@ class SpecificationService extends BaseService
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): ?Model
+    public function update(array $data, int $id): Model
     {
-        $model = $this->repository->update($data, $id);
-
-        if (!$model) {
+        try{
+            return $this->repository->update($data, $id);
+        } catch (ModelNotFoundException $e) {
             throw new NotFoundException();
         }
-
-        return $model;
     }
 }

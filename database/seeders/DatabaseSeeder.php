@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             SubcategorySeeder::class,
             BrandSeeder::class,
             SpecificationSeeder::class,
+            PrefixSeeder::class,
+            BranchSeeder::class
         ]);
     }
 }

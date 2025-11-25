@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class OptionValueRepository implements OptionValueInterface
 {
-    public function getById(int $id): ?Model
+    public function getById(int $id): Model
     {
-        return OptionValue::find($id);
+        return OptionValue::findOrFail($id);
     }
 
     public function create(array $data): Model
