@@ -24,9 +24,9 @@ class StoreBrandRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'between:3, 60',
+                'between:2, 60',
                 'unique:brands,name',
-                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/'
+                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s-]+$/'
             ],
         ];
     }

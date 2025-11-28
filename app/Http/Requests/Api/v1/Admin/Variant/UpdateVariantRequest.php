@@ -74,11 +74,13 @@ class UpdateVariantRequest extends FormRequest
                 File::image()
             ],
             'features' => [
+                'sometimes',
                 'required',
                 'array',
                 'min:1'
             ],
             'features.*.option_product_value' => [
+                'sometimes',
                 'required',
                 'integer:strict',
                 'exists:option_product_value,id',

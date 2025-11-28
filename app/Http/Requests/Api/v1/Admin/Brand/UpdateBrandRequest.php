@@ -28,8 +28,8 @@ class UpdateBrandRequest extends FormRequest
             'name' => [
                 'sometimes',
                 'required',
-                'between:3, 60',
-                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/',
+                'between:2, 60',
+                'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s-]+$/',
                 Rule::unique('brands')->ignore($this->route('brand'))
             ],
             'status' => [

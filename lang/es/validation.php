@@ -280,5 +280,6 @@ return [
         'winner'                   => 'ganador',
         'work'                     => 'trabajo',
         'year'                     => 'año',
+        'category_id'                     => 'categoría',
     ],
 ];
