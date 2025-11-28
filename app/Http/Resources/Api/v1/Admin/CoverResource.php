@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\v1\Admin;
 
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ class CoverResource extends JsonResource
             'end_at' => $this->end_at,
             'status' => $this->status,
             'order' => $this->order,
-            'image' => Storage::url($this->image->path)
+            'image' => (new Cloudinary())->image($this->image->path)->toUrl()
         ];
     }
 }
