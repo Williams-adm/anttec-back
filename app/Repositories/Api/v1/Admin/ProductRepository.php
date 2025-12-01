@@ -20,6 +20,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
         try{
             $product = Product::create([
                 'name' => $data['name'],
+                'model' => $data['model'],
                 'description' => $data['description'] ?? null,
                 'subcategory_id' => $data['subcategory_id'],
                 'brand_id' => $data['brand_id'],
@@ -47,7 +48,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
         DB::beginTransaction();
         try {
             $product = $this->getById($id);
-            
+
             if (!empty($productData)) {
                 $product->update($productData);
             }

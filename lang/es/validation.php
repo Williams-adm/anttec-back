@@ -280,6 +280,8 @@ return [
         'winner'                   => 'ganador',
         'work'                     => 'trabajo',
         'year'                     => 'año',
-        'category_id'                     => 'categoría',
+        'category_id'              => 'categoría',
+        'subcategory_id'           => 'subcategoría',
+        'brand_id'                 => 'marca',
     ],
 ];

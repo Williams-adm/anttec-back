@@ -15,7 +15,6 @@ class SpecificationSeeder extends Seeder
     {
         $specifications = [
             'Almacenamiento',
-            'Modelo',
             'DPI',
             'Dimensiones'
         ];

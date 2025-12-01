@@ -28,6 +28,7 @@ class ProductService extends BaseService
     {
         $productData = Arr::only($data, [
             'name',
+            'model',
             'description',
             'status',
             'subcategory_id',

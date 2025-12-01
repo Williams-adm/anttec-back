@@ -29,6 +29,11 @@ class StoreProductRequest extends FormRequest
                 'between:3, 100',
                 'unique:products,name'
             ],
+            'model' => [
+                'required',
+                'string',
+                'between:3, 80',
+            ],
             'description' => [
                 'nullable',
                 'string',

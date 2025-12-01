@@ -32,6 +32,12 @@ class UpdateProductRequest extends FormRequest
                 'between:3, 100',
                 Rule::unique('products')->ignore($this->route('product'))
             ],
+            'model' => [
+                'sometimes',
+                'required',
+                'string',
+                'between:3, 80',
+            ],
             'description' => [
                 'sometimes',
                 'string',

@@ -6,6 +6,7 @@ use App\Http\Requests\Api\v1\Admin\Product\StoreProductRequest;
 use App\Http\Requests\Api\v1\Admin\Product\UpdateProductRequest;
 use App\Http\Resources\Api\v1\Admin\ProductOptionsResource;
 use App\Http\Resources\Api\v1\Admin\ProductResource;
+use App\Http\Resources\Api\v1\Admin\ProductShortResource;
 use App\Services\Api\v1\Admin\ProductService;
 use Illuminate\Http\JsonResponse;
 
@@ -17,6 +18,21 @@ class ProductController extends BaseController
     public function __construct(ProductService $service)
     {
         parent::__construct($service, ProductResource::class);
+    }
+
+    public function index(): JsonResponse
+    {
+        $array = ProductShortResource::collection(
+            $this->service->getAll()
+        )->response()->getData(true);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Listado paginado exitoso',
+            'data' => $array['data'],
+            'links' => $array['links'],
+            'meta' => $array['meta'],
+        ], 200);
     }
 
     public function store(StoreProductRequest $request): JsonResponse

@@ -37,7 +37,8 @@ class StoreCoverRequest extends FormRequest
             ],
             'end_at' => [
                 'nullable',
-                Rule::date()->afterOrEqual($this->input('start_at'))
+                'date',
+                'after_or_equal:start_at'
             ],
             'image' => [
                 'required',
