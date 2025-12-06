@@ -20,15 +20,35 @@ class ProductResource extends JsonResource
             'model' => $this->model,
             'description' => $this->description,
             'status' => $this->status,
-            'category' => $this->subcategory->category->name,
-            'subcategory' => $this->subcategory->name,
-            'brand' => $this->brand->name,
-            'specifications' => $this->specifications->map(function ($spec) {
+            'category' => $this->whenLoaded('subcategory', function () {
                 return [
-                    'id' => $spec->id,
-                    'name' => $spec->name,
-                    'value' => $spec->pivot->value,
+                    'id' => $this->subcategory->category->id,
+                    'name' => $this->subcategory->category->name,
                 ];
+            }),
+
+            'subcategory' => $this->whenLoaded('subcategory', function () {
+                return [
+                    'id' => $this->subcategory->id,
+                    'name' => $this->subcategory->name,
+                ];
+            }),
+
+            'brand' => $this->whenLoaded('brand', function () {
+                return [
+                    'id' => $this->brand->id,
+                    'name' => $this->brand->name,
+                ];
+            }),
+
+            'specifications' => $this->whenLoaded('specifications', function () {
+                return $this->specifications->map(function ($spec) {
+                    return [
+                        'id' => $spec->id,
+                        'name' => $spec->name,
+                        'value' => $spec->pivot->value,
+                    ];
+                });
             }),
         ];
     }

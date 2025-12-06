@@ -4,6 +4,7 @@ namespace App\Repositories\Api\v1\Admin;
 
 use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Models\Product;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,16 @@ class ProductRepository extends BaseRepository implements ProductInterface
     public function __construct(Product $model)
     {
         parent::__construct($model);
+    }
+
+    public function getAll(int $pagination): LengthAwarePaginator
+    {
+        return $this->model::with('subcategory', 'brand')->paginate($pagination);
+    }
+
+    public function getById(int $id): Model
+    {
+        return $this->model::with(['subcategory.category', 'brand', 'specifications'])->findOrFail($id);
     }
 
     public function create(array $data): Model
@@ -35,7 +46,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
 
             DB::commit();
 
-            return $product->refresh();
+            return $product->refresh()->load(['subcategory.category', 'brand', 'specifications']);
 
         } catch (\Exception $e) {
             DB::rollback();
@@ -53,18 +64,25 @@ class ProductRepository extends BaseRepository implements ProductInterface
                 $product->update($productData);
             }
 
-            if (!empty($specificationsData['specifications'])) {
-                $specs = collect($specificationsData['specifications'])
-                    ->mapWithKeys(fn($s) => [
-                        $s['specification_id'] => ['value' => $s['value']]
-                    ])
-                    ->toArray();
+            if (array_key_exists('specifications', $specificationsData)) {
 
-                $product->specifications()->syncWithoutDetaching($specs);
+                // ✅ si viene vacío, Laravel borrará todas (si tu negocio lo permite)
+                if (empty($specificationsData['specifications'])) {
+                    $product->specifications()->detach();
+                } else {
+                    $specs = collect($specificationsData['specifications'])
+                        ->mapWithKeys(fn($s) => [
+                            $s['specification_id'] => ['value' => $s['value']]
+                        ])
+                        ->toArray();
+
+                    // ✅ ESTE es el método correcto
+                    $product->specifications()->sync($specs);
+                }
             }
 
             DB::commit();
-            return $product->refresh();
+            return $product->refresh()->load(['subcategory.category', 'brand', 'specifications']);
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;

@@ -18,8 +18,12 @@ class ProductShortResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'model' => $this->model,
-            'subcategory' => $this->subcategory->name,
-            'brand' => $this->brand->name,
+            'subcategory' => $this->whenLoaded('subcategory', function () {
+                return $this->subcategory->name;
+            }),
+            'brand' => $this->whenLoaded('brand', function () {
+                return $this->brand->name;
+            }),
             'status' => $this->status,
         ];
     }

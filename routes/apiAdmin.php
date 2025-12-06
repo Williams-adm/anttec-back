@@ -21,6 +21,8 @@ Route::get('specifications/list', [SpecificationController::class, 'getAllList']
 Route::get('options/list', [OptionController::class, 'getAllList'])->name('options.list');
 Route::post('covers/order', [CoverController::class, 'reorder'])->name('covers.reorder');
 
+Route::get('categories/{id}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.getSubcategories');
+
 Route::apiResources([
     'categories' => CategoryController::class,
     'subcategories' => SubcategoryController::class,

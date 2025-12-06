@@ -39,4 +39,14 @@ class CategoryController extends BaseController
             'data' => new CategoryResource($model),
         ], 200);
     }
+
+    public function getSubcategories(int $id)
+    {
+        $subcategories = $this->service->getSubcategories($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Listado exitoso',
+            'data' => $subcategories,
+        ], 200);
+    }
 }

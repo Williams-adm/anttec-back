@@ -19,10 +19,12 @@ class SubcategoryResource extends JsonResource
             'name' => $this->name,
             'category_id' => $this->category->id,
             'status' => $this->status,
-            'category' => [
-                'id' => $this->category->id,
-                'name' => $this->category->name,
-            ]
+            'category' => $this->whenLoaded('category', function () {
+                return [
+                    'id' => $this->category->id,
+                    'name' => $this->category->name,
+                ];
+            }),
         ];
     }
 }
