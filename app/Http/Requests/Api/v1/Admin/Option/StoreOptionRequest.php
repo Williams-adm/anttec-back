@@ -49,7 +49,7 @@ class StoreOptionRequest extends FormRequest
             'option_values.*.description' => [
                 'required',
                 'string',
-                'between:2, 60'
+                'between:1, 60'
             ],
         ];
     }

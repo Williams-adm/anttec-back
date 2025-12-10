@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\v1\Admin\Option;
 
-use App\Enums\Api\v1\Admin\OptionType;
 use App\Exceptions\Api\v1\NotFoundException;
 use App\Models\Option;
+use App\Rules\Api\v1\Admin\Option\UniqueOptionValues;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -33,16 +33,35 @@ class UpdateOptionRequest extends FormRequest
                 'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/',
                 Rule::unique('options')->ignore($this->route('option'))
             ],
-            'type' => [
-                'sometimes',
-                'required',
-                Rule::enum(OptionType::class)
-            ],
             'status' => [
                 'sometimes',
                 'required',
                 'boolean:strict'
-            ]
+            ],
+            'option_values' => [
+                'sometimes',
+                'required',
+                'array',
+                'min:1',
+                new UniqueOptionValues
+            ],
+            'option_values.*.id' => [
+                'nullable',
+                'integer',
+                Rule::exists('option_values', 'id'),
+            ],
+            'option_values.*.value' => [
+                'sometimes',
+                'required',
+                'string',
+                'between:1, 20'
+            ],
+            'option_values.*.description' => [
+                'sometimes',
+                'required',
+                'string',
+                'between:1, 60'
+            ],
         ];
     }
 

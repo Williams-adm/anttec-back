@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api\v1\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OptionResource extends JsonResource
+class OptionShortResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,9 +19,6 @@ class OptionResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'status' => $this->status,
-            'option_values' => $this->whenLoaded('optionValues', function () {
-                return OptionValueResource::collection($this->optionValues);
-            }),
         ];
     }
 }

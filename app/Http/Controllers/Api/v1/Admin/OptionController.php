@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 use App\Http\Requests\Api\v1\Admin\Option\StoreOptionRequest;
 use App\Http\Requests\Api\v1\Admin\Option\UpdateOptionRequest;
 use App\Http\Resources\Api\v1\Admin\OptionResource;
+use App\Http\Resources\Api\v1\Admin\OptionShortResource;
 use App\Services\Api\v1\Admin\OptionService;
 use Illuminate\Http\JsonResponse;
 
@@ -16,6 +17,21 @@ class OptionController extends BaseController
     public function __construct(OptionService $service)
     {
         parent::__construct($service, OptionResource::class);
+    }
+
+    public function index(): JsonResponse
+    {
+        $array = OptionShortResource::collection(
+            $this->service->getAll()
+        )->response()->getData(true);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Listado paginado exitoso',
+            'data' => $array['data'],
+            'links' => $array['links'],
+            'meta' => $array['meta'],
+        ], 200);
     }
 
     public function store(StoreOptionRequest $request): JsonResponse

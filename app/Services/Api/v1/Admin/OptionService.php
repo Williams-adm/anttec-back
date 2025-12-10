@@ -3,9 +3,11 @@
 namespace App\Services\Api\v1\Admin;
 
 use App\Contracts\Api\v1\Admin\OptionInterface;
+use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Arr;
 
 /**
  * @extends BaseService<OptionInterface>
@@ -24,10 +26,22 @@ class OptionService extends BaseService
 
     public function update(array $data, int $id): Model
     {
+        $optionData = Arr::only($data, [
+            'name',
+            'status',
+        ]);
+
+        $optionValuesData = Arr::only($data, ['option_values']);
+
         try {
-            return $this->repository->update($data, $id);
+            return $this->repository->update($optionData, $optionValuesData, $id);
         } catch (ModelNotFoundException) {
             throw new NotFoundException();
+        } catch (\Exception $e) {
+            throw new InternalServerErrorException(
+                'No se pudo actualizar el producto',
+                $e->getMessage()
+            );
         }
     }
 }
