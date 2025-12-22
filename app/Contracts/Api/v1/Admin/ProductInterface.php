@@ -8,4 +8,5 @@ interface ProductInterface extends BaseInterface
 {
     public function create(array $data): Model;
     public function update(array $productData, array $specificationsData, int $id): Model;
+    public function getAllOptions(int $id): Model;
 }

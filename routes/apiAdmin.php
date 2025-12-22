@@ -22,6 +22,7 @@ Route::get('options/list', [OptionController::class, 'getAllList'])->name('optio
 Route::post('covers/order', [CoverController::class, 'reorder'])->name('covers.reorder');
 
 Route::get('categories/{id}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.getSubcategories');
+Route::get('options/{id}/values', [OptionController::class, 'getOptionValues'])->name('categories.getOptionValues');
 
 Route::apiResources([
     'categories' => CategoryController::class,

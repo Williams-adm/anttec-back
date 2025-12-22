@@ -20,7 +20,7 @@ class Option extends Model
 
     public function optionValues(): HasMany
     {
-        return $this->hasMany(OptionValue::class)->chaperone();
+        return $this->hasMany(OptionValue::class);
     }
 
     public function products(): BelongsToMany

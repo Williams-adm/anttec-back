@@ -55,4 +55,14 @@ class OptionController extends BaseController
             'data' => new OptionResource($model),
         ], 200);
     }
+
+    public function getOptionValues(int $id)
+    {
+        $optionValues = $this->service->getOptionValues($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Listado exitoso',
+            'data' => $optionValues,
+        ], 200);
+    }
 }

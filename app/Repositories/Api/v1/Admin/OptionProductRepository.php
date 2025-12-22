@@ -42,11 +42,9 @@ class OptionProductRepository implements OptionProductInterface
         DB::beginTransaction();
         try {
             $optionProduct = $this->getById($data['option_product_id']);
-            foreach ($data['values'] as $value) {
-                $optionProduct->optionValues()->attach(
-                    $value['option_value_id']
-                );
-            }
+            $optionProduct->optionValues()->attach(
+                $data['option_value_id']
+            );
             DB::commit();
 
             return $optionProduct->refresh();

@@ -5,6 +5,7 @@ namespace App\Services\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\OptionInterface;
 use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
@@ -42,6 +43,15 @@ class OptionService extends BaseService
                 'No se pudo actualizar el producto',
                 $e->getMessage()
             );
+        }
+    }
+
+    public function getOptionValues(int $id): Collection
+    {
+        try {
+            return $this->repository->getOptionValues($id);
+        } catch (ModelNotFoundException) {
+            throw new NotFoundException();
         }
     }
 }

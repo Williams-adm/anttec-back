@@ -48,4 +48,13 @@ class ProductService extends BaseService
             );
         }
     }
+
+    public function getAllOptions(int $id): Model
+    {
+        try {
+            return $this->repository->getAllOptions($id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException();
+        }
+    }
 }

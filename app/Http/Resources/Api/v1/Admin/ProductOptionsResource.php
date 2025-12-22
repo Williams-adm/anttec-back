@@ -14,21 +14,23 @@ class ProductOptionsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'options' => $this->options->map(function ($option) {
+        return $this->whenLoaded('options', function () {
+            return $this->options->map(function ($option) {
                 return [
                     'id' => $option->pivot->id,
                     'product_id' => $option->pivot->product_id,
                     'option_id' => $option->pivot->option_id,
+                    'option_name' => $option->name,
+                    'option_type' => $option->type,
                     'values' => $option->pivot->optionValues->map(function ($value) {
                         return [
                             'id' => $value->id,
                             'value' => $value->value,
                             'description' => $value->description
                         ];
-                    })
+                    }),
                 ];
-            }),
-        ];
+            })->toArray();
+        }, []);
     }
 }

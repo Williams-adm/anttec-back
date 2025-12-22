@@ -30,20 +30,14 @@ class StoreOptionProductValuesRequest extends FormRequest
                 'integer:strict',
                 'exists:option_product,id'
             ],
-            'values' => [
-                'required',
-                'array',
-                'min:1',
-                new UniqueOptionProductValues,
-                Rule::unique('option_product_value', 'option_value_id')
-                    ->where('option_product_id', $this->input('option_product_id')),
-            ],
-            'values.*.option_value_id' => [
+            'option_value_id' => [
                 'required',
                 'integer:strict',
                 'exists:option_values,id',
+                Rule::unique('option_product_value', 'option_value_id')
+                    ->where('option_product_id', $this->input('option_product_id')),
                 new OptionProductValuesBelongsToOption($this->input('option_product_id')),
-            ]
+            ],
         ];
     }
 }

@@ -32,8 +32,7 @@ class OptionProductValuesBelongsToOption implements ValidationRule
             ->exists();
 
         if (! $exists) {
-            $fail("El valor seleccionado en {$attribute} no pertenece a la opción especificada.");
+            $fail("El valor seleccionado no pertenece a la opción especificada.");
         }
-
     }
 }

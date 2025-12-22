@@ -5,6 +5,7 @@ namespace App\Repositories\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -87,5 +88,12 @@ class ProductRepository extends BaseRepository implements ProductInterface
             DB::rollback();
             throw $e;
         }
+    }
+
+    public function getAllOptions(int $id): Model
+    {
+        return $this->model
+            ->with(['options.optionValues'])
+            ->findOrFail($id);
     }
 }

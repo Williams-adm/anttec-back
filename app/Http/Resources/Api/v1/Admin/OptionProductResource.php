@@ -18,7 +18,7 @@ class OptionProductResource extends JsonResource
             'id' => $this->id,
             'product_id' => $this->product_id,
             'option_id' => $this->option_id,
-            'option_values' => $this->optionValues->map(function ($spec) {
+            'values' => $this->optionValues->map(function ($spec) {
                 return [
                     'option_value_id' => $spec->pivot->option_value_id,
                 ];

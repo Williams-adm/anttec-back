@@ -5,6 +5,7 @@ namespace App\Repositories\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\OptionInterface;
 use App\Models\Option;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -97,5 +98,11 @@ class OptionRepository extends BaseRepository implements OptionInterface
             DB::rollback();
             throw $e;
         }
+    }
+
+    public function getOptionValues(int $id): Collection
+    {
+        $model = $this->getById($id);
+        return $model->optionValues()->get(['id', 'description']);
     }
 }

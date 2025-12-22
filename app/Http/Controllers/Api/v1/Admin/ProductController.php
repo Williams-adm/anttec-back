@@ -59,7 +59,7 @@ class ProductController extends BaseController
 
     public function getAllOptions(int $id): JsonResponse
     {
-        $model = $this->service->getById($id);
+        $model = $this->service->getAllOptions($id);
 
         return response()->json([
             'success' => true,
