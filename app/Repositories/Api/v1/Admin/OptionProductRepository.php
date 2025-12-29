@@ -5,6 +5,7 @@ namespace App\Repositories\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Models\OptionProduct;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class OptionProductRepository implements OptionProductInterface
@@ -52,5 +53,20 @@ class OptionProductRepository implements OptionProductInterface
             DB::rollback();
             throw $e;
         }
+    }
+
+    public function getAllValues(int $id): Collection
+    {
+
+        return OptionProduct::findOrFail($id)
+            ->optionValues()
+            ->get()
+            ->map(function ($value) {
+                return [
+                    'id' => $value->pivot->id, // 👈 ID DEL PIVOT
+                    'id_value' => $value->id,
+                    'description' => $value->description,
+                ];
+            });
     }
 }

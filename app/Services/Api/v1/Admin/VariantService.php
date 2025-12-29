@@ -5,11 +5,14 @@ namespace App\Services\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\VariantInterface;
 use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
+use App\Models\Variant;
 use App\traits\SkuGenerator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 /**
  * @extends BaseService<VariantInterface>
@@ -21,6 +24,11 @@ class VariantService extends BaseService
     public function __construct(VariantInterface $repository)
     {
         parent::__construct($repository);
+    }
+
+    public function getAllShort(int $id, int $pagination = 15): LengthAwarePaginator
+    {
+        return $this->repository->getAllShort($pagination, $id);
     }
 
     public function create(array $data): Model
@@ -41,7 +49,16 @@ class VariantService extends BaseService
                 $images[] = $path;
             }
 
-            $variantFeatures = array_column($data['features'], 'option_product_value');
+            $variantFeatures = collect($data['features'])
+                ->pluck('option_product_value')
+                ->sort()
+                ->values()
+                ->toArray();
+
+            $this->validateUniqueCombination(
+                $data['product_id'],
+                $variantFeatures
+            );
 
             return $this->repository->create($variantData, $images, $variantFeatures, $data['stock_min']);
         } catch (\Exception $e) {
@@ -92,6 +109,26 @@ class VariantService extends BaseService
                     Storage::delete($imagePath);
                 }
             }
+        }
+    }
+
+    private function validateUniqueCombination(int $productId, array $variantFeatures): void
+    {
+        $features = collect($variantFeatures)->sort()->values()->toArray();
+
+        $exists = Variant::where('product_id', $productId)
+            ->whereHas('optionProductValues', function ($q) use ($features) {
+                $q->whereIn('option_product_value_id', $features);
+            }, '=', count($features))
+            ->whereDoesntHave('optionProductValues', function ($q) use ($features) {
+                $q->whereNotIn('option_product_value_id', $features);
+            })
+            ->exists();
+
+        if ($exists) {
+            throw ValidationException::withMessages([
+                'features' => 'Ya existe una variante con esta combinación'
+            ]);
         }
     }
 }

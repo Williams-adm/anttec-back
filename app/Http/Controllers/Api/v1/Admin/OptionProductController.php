@@ -47,4 +47,14 @@ class OptionProductController extends Controller
             'data' => new OptionProductResource($response),
         ], 201);
     }
+
+    public function getAllValues(int $id): JsonResponse
+    {
+        $model = $this->service->getAllValues($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Exitoso',
+            'data' => $model,
+        ], 200);
+    }
 }

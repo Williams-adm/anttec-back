@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -27,5 +28,15 @@ class OptionProductValue extends Pivot
             'option_product_value_id',
             'variant_id'
         )->withTimestamps();;
+    }
+
+    public function optionValue(): BelongsTo
+    {
+        return $this->belongsTo(OptionValue::class, 'option_value_id');
+    }
+
+    public function optionProduct(): BelongsTo
+    {
+        return $this->belongsTo(Option::class, 'option_product_id');
     }
 }

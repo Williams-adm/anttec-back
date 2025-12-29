@@ -27,4 +27,9 @@ class Branch extends Model
     {
         return $this->belongsToMany(Variant::class)->using(BranchVariant::class)->withPivot('stock', 'stock_min', 'id')->withTimestamps();
     }
+
+    public function address(): MorphOne
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
 }

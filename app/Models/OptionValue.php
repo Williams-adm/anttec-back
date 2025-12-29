@@ -26,6 +26,6 @@ class OptionValue extends Model
             'option_product_value',
             'option_value_id',
             'option_product_id',
-        )->using(OptionProductValue::class)->withTimestamps();
+        )->using(OptionProductValue::class)->withPivot('id')->withTimestamps();
     }
 }

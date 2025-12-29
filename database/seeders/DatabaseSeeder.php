@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             SpecificationSeeder::class,
             PrefixSeeder::class,
-            BranchSeeder::class
+            BranchSeeder::class,
+            AddressSeeder::class
         ]);
     }
 }

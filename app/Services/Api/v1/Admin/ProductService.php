@@ -5,6 +5,7 @@ namespace App\Services\Api\v1\Admin;
 use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Exceptions\Api\v1\InternalServerErrorException;
 use App\Exceptions\Api\v1\NotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
@@ -53,6 +54,24 @@ class ProductService extends BaseService
     {
         try {
             return $this->repository->getAllOptions($id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException();
+        }
+    }
+
+    public function hasOptions(int $id): bool
+    {
+        try {
+            return $this->repository->hasOptions($id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException();
+        }
+    }
+
+    public function getAllOptionsShort(int $id): Collection
+    {
+        try {
+            return $this->repository->getAllOptionsShort($id);
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException();
         }

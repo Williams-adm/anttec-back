@@ -19,6 +19,6 @@ class Department extends Model
 
     public function provinces(): HasMany
     {
-        return $this->hasMany(Province::class)->chaperone();
+        return $this->hasMany(Province::class);
     }
 }

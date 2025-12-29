@@ -4,6 +4,7 @@ namespace App\Repositories\Api\v1\Admin;
 
 use App\Contracts\Api\v1\Admin\VariantInterface;
 use App\Models\Variant;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,23 @@ class VariantRepository extends BaseRepository implements VariantInterface
     public function __construct(Variant $model)
     {
         parent::__construct($model);
+    }
+
+    public function getAll(int $pagination): LengthAwarePaginator
+    {
+        return $this->model::with(['images', 'branches', 'product', 'optionProductValues.optionValue'])->paginate($pagination);
+    }
+
+    public function getById(int $id): Model
+    {
+        return $this->model::with(['images', 'branches', 'product', 'optionProductValues.optionValue'])->findOrFail($id);
+    }
+
+    public function getAllShort(int $pagination, int $id): LengthAwarePaginator
+    {
+        return $this->model::where('product_id', $id)
+            ->with(['images', 'optionProductValues.optionValue'])
+            ->paginate($pagination);
     }
 
     public function create(array $variantData, array $images, array $variantFeatures, int $stockmin): Model
@@ -30,15 +48,11 @@ class VariantRepository extends BaseRepository implements VariantInterface
                 ]);
             }
 
-            foreach($variantFeatures as $variantFeature) {
-                $variant->optionProductValues()->attach([
-                    'option_product_value_id' => $variantFeature
-                ]);
-            }
+            $variant->optionProductValues()->sync($variantFeatures);
 
             DB::commit();
 
-            return $variant->refresh();
+            return $variant->refresh()->load(['images', 'branches', 'product', 'optionProductValues.optionValue']);
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
@@ -74,7 +88,7 @@ class VariantRepository extends BaseRepository implements VariantInterface
             }
 
             DB::commit();
-            return $model->refresh();
+            return $model->refresh()->load(['images', 'branches', 'product', 'optionProductValues.optionValue']);
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;

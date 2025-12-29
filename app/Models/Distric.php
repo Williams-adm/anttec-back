@@ -19,6 +19,6 @@ class Distric extends Model
 
     public function streets(): HasMany
     {
-        return $this->hasMany(Street::class)->chaperone();
+        return $this->hasMany(Street::class);
     }
 }

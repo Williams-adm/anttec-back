@@ -23,6 +23,11 @@ class BranchResource extends JsonResource
                 'id' => $this->phone->id,
                 'number' => $this->phone->number,
                 'prefix' => '+' . $this->phone->prefix->prefix,
+            ],
+            'address' => [
+                'id' => $this->address->id,
+                'street' => $this->address->street->name . ' #' . $this->address->street->number,
+                'distric' => $this->address->street->distric->name,
             ]
         ];
     }

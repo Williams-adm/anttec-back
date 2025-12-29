@@ -6,6 +6,7 @@ use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Exceptions\Api\v1\NotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 
 class OptionProductService
 {
@@ -30,5 +31,14 @@ class OptionProductService
     public function addValues(array $data): Model
     {
         return $this->repository->addValues($data);
+    }
+
+    public function getAllValues(int $id): Collection
+    {
+        try {
+            return $this->repository->getAllValues($id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException();
+        }
     }
 }

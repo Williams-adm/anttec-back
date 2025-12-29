@@ -24,6 +24,13 @@ Route::post('covers/order', [CoverController::class, 'reorder'])->name('covers.r
 Route::get('categories/{id}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.getSubcategories');
 Route::get('options/{id}/values', [OptionController::class, 'getOptionValues'])->name('categories.getOptionValues');
 
+Route::controller(VariantController::class)->prefix('variants')
+    ->group(
+        function () {
+            Route::get('product/{id}/short', 'getAllShort')->name('variants.getAllShort');
+        }
+    );
+
 Route::apiResources([
     'categories' => CategoryController::class,
     'subcategories' => SubcategoryController::class,
@@ -37,31 +44,37 @@ Route::apiResources([
 ]);
 
 Route::controller(InventoryMovementController::class)->prefix('inventory-movements')
-    ->group(function () {
-        Route::get('/', 'index')->name('inventory-movements.index');
-        Route::post('/', 'store')->name('inventory-movements.store');
-        Route::get('/{id}', 'show')->name('inventory-movements.show');
-    }
-);
+    ->group(
+        function () {
+            Route::get('/', 'index')->name('inventory-movements.index');
+            Route::post('/', 'store')->name('inventory-movements.store');
+            Route::get('/{id}', 'show')->name('inventory-movements.show');
+        }
+    );
 
 Route::controller(ProductController::class)->prefix('products')
     ->group(
         function () {
             Route::get('/{id}/options', 'getAllOptions')->name('optionValues.getAllOptions');
+            Route::get('/{id}/hasOptions', 'hasOptions')->name('optionValues.hasOptions');
+            Route::get('/{id}/optionsList', 'getAllOptionsShort')->name('optionValues.getAllOptionsShort');
         }
     );
 
 Route::controller(OptionValueController::class)->prefix('option-values')
-    ->group(function () {
-        Route::post('/', 'store')->name('optionValues.store');
-        Route::get('/{id}', 'show')->name('optionValues.show');
-    }
-);
+    ->group(
+        function () {
+            Route::post('/', 'store')->name('optionValues.store');
+            Route::get('/{id}', 'show')->name('optionValues.show');
+        }
+    );
 
 Route::controller(OptionProductController::class)->prefix('option-products')
-    ->group(function () {
-        Route::post('/', 'store')->name('optionProducts.store');
-        Route::post('/values', 'addValues')->name('optionProducts.addValues');
-        Route::get('/{id}', 'show')->name('optionProducts.show');
-    }
-);
+    ->group(
+        function () {
+            Route::post('/', 'store')->name('optionProducts.store');
+            Route::post('/values', 'addValues')->name('optionProducts.addValues');
+            Route::get('/{id}', 'show')->name('optionProducts.show');
+            Route::get('/{id}/values', 'getAllValues')->name('optionProducts.getAllValues');
+        }
+    );

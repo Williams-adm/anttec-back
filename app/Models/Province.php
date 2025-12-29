@@ -20,6 +20,6 @@ class Province extends Model
 
     public function districs(): HasMany
     {
-        return $this->hasMany(Distric::class)->chaperone();
+        return $this->hasMany(Distric::class);
     }
 }

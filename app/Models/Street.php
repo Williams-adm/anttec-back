@@ -20,6 +20,6 @@ class Street extends Model
 
     public function addresses(): HasMany
     {
-        return $this->hasMany(Address::class)->chaperone();
+        return $this->hasMany(Address::class);
     }
 }

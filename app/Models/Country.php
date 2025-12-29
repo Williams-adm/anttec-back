@@ -13,6 +13,6 @@ class Country extends Model
 
     public function departaments(): HasMany
     {
-        return $this->hasMany(Department::class)->chaperone();
+        return $this->hasMany(Department::class);
     }
 }

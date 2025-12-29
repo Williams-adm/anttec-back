@@ -29,7 +29,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
     public function create(array $data): Model
     {
         DB::beginTransaction();
-        try{
+        try {
             $product = Product::create([
                 'name' => $data['name'],
                 'model' => $data['model'],
@@ -48,7 +48,6 @@ class ProductRepository extends BaseRepository implements ProductInterface
             DB::commit();
 
             return $product->refresh()->load(['subcategory.category', 'brand', 'specifications']);
-
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
@@ -95,5 +94,26 @@ class ProductRepository extends BaseRepository implements ProductInterface
         return $this->model
             ->with(['options.optionValues'])
             ->findOrFail($id);
+    }
+
+    public function hasOptions(int $id): bool
+    {
+        return $this->model
+            ->where('id', $id)
+            ->whereHas('options.optionValues')
+            ->exists();
+    }
+
+    public function getAllOptionsShort(int $id): Collection
+    {
+        return $this->model
+            ->findOrFail($id)
+            ->options() // 👈 consulta directa a la relación
+            ->select([
+                'options.id',
+                'options.name',
+            ])
+            ->get()
+            ->makeHidden('pivot');
     }
 }

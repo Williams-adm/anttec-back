@@ -67,4 +67,25 @@ class ProductController extends BaseController
             'data' => new ProductOptionsResource($model),
         ], 200);
     }
+
+    public function hasOptions(int $id): JsonResponse
+    {
+        $hasOptions = $this->service->hasOptions($id);
+        return response()->json([
+            'success' => true,
+            'message' => $hasOptions
+            ? 'Tiene opciones'
+            : 'No tiene opciones',
+        ], 200);
+    }
+
+    public function getAllOptionsShort(int $id): JsonResponse
+    {
+        $model = $this->service->getAllOptionsShort($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Exitoso',
+            'data' => $model,
+        ], 200);
+    }
 }
