@@ -13,6 +13,6 @@ class Prefix extends Model
 
     public function phones(): HasMany
     {
-        return $this->hasMany(Phone::class)->chaperone();
+        return $this->hasMany(Phone::class);
     }
 }

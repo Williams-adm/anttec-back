@@ -40,6 +40,7 @@ class UpdateProductRequest extends FormRequest
             ],
             'description' => [
                 'sometimes',
+                'nullable',
                 'string',
                 'min:10'
             ],

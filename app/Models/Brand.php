@@ -18,6 +18,6 @@ class Brand extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class)->chaperone();
+        return $this->hasMany(Product::class);
     }
 }

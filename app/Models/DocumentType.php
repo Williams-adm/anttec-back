@@ -15,6 +15,6 @@ class DocumentType extends Model
 
     public function documentNumbers(): HasMany
     {
-        return $this->hasMany(DocumentNumber::class)->chaperone();
+        return $this->hasMany(DocumentNumber::class);
     }
 }

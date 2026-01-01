@@ -44,6 +44,6 @@ class Product extends Model
 
     public function variants(): HasMany
     {
-        return $this->hasMany(Variant::class)->chaperone();
+        return $this->hasMany(Variant::class);
     }
 }

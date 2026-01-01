@@ -12,4 +12,10 @@ class CategoryMRepository implements CategoryMInterface
     {
         return Category::all();
     }
+
+    public function getSubcategories(int $id): Collection
+    {
+        $model = Category::findOrFail($id);
+        return $model->subcategories()->get(['id', 'name']);
+    }
 }

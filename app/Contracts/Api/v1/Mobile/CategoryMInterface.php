@@ -6,4 +6,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface CategoryMInterface {
     public function getAllList(): Collection;
+    public function getSubcategories(int $id): Collection;
 }

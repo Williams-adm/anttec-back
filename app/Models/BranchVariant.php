@@ -23,6 +23,6 @@ class BranchVariant extends Pivot
 
     public function inventoryMovements(): HasMany
     {
-        return $this->hasMany(InventoryMovement::class)->chaperone();
+        return $this->hasMany(InventoryMovement::class);
     }
 }
