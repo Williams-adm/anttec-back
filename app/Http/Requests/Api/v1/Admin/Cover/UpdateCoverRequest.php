@@ -37,7 +37,6 @@ class UpdateCoverRequest extends FormRequest
             'start_at' => [
                 'sometimes',
                 'required',
-                Rule::date()->afterOrEqual(today())
             ],
             'end_at' => [
                 'sometimes',

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class BranchVariant extends Pivot
@@ -21,8 +22,13 @@ class BranchVariant extends Pivot
         'variant_id'
     ];
 
-    public function inventoryMovements(): HasMany
+    public function movements(): BelongsToMany
     {
-        return $this->hasMany(InventoryMovement::class);
+        return $this->belongsToMany(Movement::class, 'inventory_movement', 'branch_variant_id','movement_id')->using(InventoryMovement::class)->withPivot('id', 'quantity')->withTimestamps();
+    }
+
+    public function variant(): BelongsTo
+    {
+        return $this->belongsTo(Variant::class);
     }
 }

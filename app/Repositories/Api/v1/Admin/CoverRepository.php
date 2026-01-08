@@ -4,6 +4,7 @@ namespace App\Repositories\Api\v1\Admin;
 
 use App\Contracts\Api\v1\Admin\CoverInterface;
 use App\Models\Cover;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,11 @@ class CoverRepository extends BaseRepository implements CoverInterface
     public function __construct(Cover $model)
     {
         parent::__construct($model);
+    }
+
+    public function getAll(int $pagination): LengthAwarePaginator
+    {
+        return $this->model->orderBy('order', 'asc')->paginate($pagination);
     }
 
     public function create(array $data): Model
@@ -38,7 +44,7 @@ class CoverRepository extends BaseRepository implements CoverInterface
         }
     }
 
-    public function update(array $coverData, array $imageData, int $id): Model
+    public function update(array $coverData, ?string $imagePath, int $id): Model
     {
         DB::beginTransaction();
         try {
@@ -48,9 +54,9 @@ class CoverRepository extends BaseRepository implements CoverInterface
                 $cover->update($coverData);
             }
 
-            if (!empty($imageData) && isset($imageData['image'])) {
+            if ($imagePath) {
                 $cover->image()->update([
-                    'path' => $imageData['image']
+                    'path' => $imagePath
                 ]);
             }
 

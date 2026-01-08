@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Admin\InventoryMovement;
+namespace App\Http\Requests\Api\v1\Admin\Movement;
 
-use App\Enums\Api\v1\Admin\InventoryMovementType;
+use App\Enums\Api\v1\Admin\MovementReasonType;
+use App\Enums\Api\v1\Admin\MovementType;
 use App\Rules\Api\v1\Admin\Shared\GreaterThanZeroInt;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreInventoryMovementRequest extends FormRequest
+class StoreMovementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,10 +28,14 @@ class StoreInventoryMovementRequest extends FormRequest
         return [
             'type' => [
                 'required',
-                Rule::enum(InventoryMovementType::class)
+                Rule::enum(MovementType::class)
+            ],
+            'reason' => [
+                'required',
+                Rule::enum(MovementReasonType::class)
             ],
             'detail_transaction' => [
-                'required',
+                'nullable',
                 'string',
                 'between:3, 180',
             ],

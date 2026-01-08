@@ -34,9 +34,4 @@ class OptionProductValue extends Pivot
     {
         return $this->belongsTo(OptionValue::class, 'option_value_id');
     }
-
-    public function optionProduct(): BelongsTo
-    {
-        return $this->belongsTo(Option::class, 'option_product_id');
-    }
 }

@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class InventoryMovement extends Model
+class InventoryMovement extends Pivot
 {
-    protected $fillable = [
-        'type',
-        'detail_transaction',
-        'quantity',
-        'branch_variant_id'
-    ];
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
 
-    public function branchVariant(): BelongsTo
-    {
-        return $this->belongsTo(BranchVariant::class);
-    }
+    protected $fillable = [
+        'quantity',
+        'branch_variant_id',
+        'movement_id'
+    ];
 }

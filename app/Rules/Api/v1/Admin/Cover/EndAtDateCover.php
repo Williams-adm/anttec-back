@@ -16,12 +16,16 @@ class EndAtDateCover implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        if ($value === null || $value === '') {
+            return;
+        }
+
         $coverId = Route::current()->parameter('cover');
         $cover = Cover::find($coverId);
 
         $startAt = request()->input('start_at', $cover->start_at);
 
-        if ($value && strtotime($value) < strtotime($startAt)) {
+        if (strtotime($value) < strtotime($startAt)) {
             $fail('La fecha de fin debe ser igual o posterior a la fecha de inicio.');
         }
     }

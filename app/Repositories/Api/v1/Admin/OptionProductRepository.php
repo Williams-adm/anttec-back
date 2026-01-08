@@ -55,10 +55,12 @@ class OptionProductRepository implements OptionProductInterface
         }
     }
 
-    public function getAllValues(int $id): Collection
+    public function getAllValues(int $productId, int $optionId): Collection
     {
 
-        return OptionProduct::findOrFail($id)
+        return OptionProduct::where('product_id', $productId)
+            ->where('option_id', $optionId)
+            ->firstOrFail()
             ->optionValues()
             ->get()
             ->map(function ($value) {

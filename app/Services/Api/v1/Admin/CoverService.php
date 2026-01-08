@@ -42,13 +42,6 @@ class CoverService extends BaseService
     {
         try {
             $cover = $this->repository->getById($id);
-            
-            if(isset($data['image']) && Storage::exists($cover->image->path)) {
-                if($cover->image->path) {
-                    Storage::delete($cover->image->path);
-                }
-                $path = Storage::putFile('covers', $data['image']);
-            }
 
             $coverData = Arr::only($data, [
                 'title',
@@ -57,14 +50,23 @@ class CoverService extends BaseService
                 'status',
             ]);
 
-            $imageData = Arr::only($data, ['image']);
-            return $this->repository->update($coverData, $imageData, $id);
+            $imagePath = null;
+
+            if (isset($data['image'])) {
+                if ($cover->image && Storage::exists($cover->image->path)) {
+                    Storage::delete($cover->image->path);
+                }
+
+                $imagePath = Storage::putFile('covers', $data['image']);
+            }
+
+            return $this->repository->update($coverData, $imagePath, $id);
 
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException();
         } catch (\Exception $e) {
-            if (isset($path)) {
-                Storage::delete($path);
+            if (isset($imagePath)) {
+                Storage::delete($imagePath);
             }
 
             throw new InternalServerErrorException(

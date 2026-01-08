@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\v1\Admin\BranchController;
+use App\Http\Controllers\Api\v1\Admin\BranchVariantController;
 use App\Http\Controllers\Api\v1\Admin\BrandController;
 use App\Http\Controllers\Api\v1\Admin\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\CoverController;
-use App\Http\Controllers\Api\v1\Admin\InventoryMovementController;
+use App\Http\Controllers\Api\v1\Admin\MovementController;
 use App\Http\Controllers\Api\v1\Admin\OptionController;
 use App\Http\Controllers\Api\v1\Admin\OptionProductController;
 use App\Http\Controllers\Api\v1\Admin\OptionValueController;
@@ -19,6 +20,8 @@ Route::get('subcategories/list', [SubcategoryController::class, 'getAllList'])->
 Route::get('brands/list', [BrandController::class, 'getAllList'])->name('brands.list');
 Route::get('specifications/list', [SpecificationController::class, 'getAllList'])->name('specifications.list');
 Route::get('options/list', [OptionController::class, 'getAllList'])->name('options.list');
+Route::get('variants/list', [VariantController::class, 'getAllList'])->name('variants.list');
+Route::get('branch-variants/list', [BranchVariantController::class, 'getAllList'])->name('branchVariants.list');
 Route::post('covers/order', [CoverController::class, 'reorder'])->name('covers.reorder');
 
 Route::get('categories/{id}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.getSubcategories');
@@ -43,12 +46,12 @@ Route::apiResources([
     'variants' => VariantController::class,
 ]);
 
-Route::controller(InventoryMovementController::class)->prefix('inventory-movements')
+Route::controller(MovementController::class)->prefix('movements')
     ->group(
         function () {
-            Route::get('/', 'index')->name('inventory-movements.index');
-            Route::post('/', 'store')->name('inventory-movements.store');
-            Route::get('/{id}', 'show')->name('inventory-movements.show');
+            Route::get('/', 'index')->name('movements.index');
+            Route::post('/', 'store')->name('movements.store');
+            Route::get('/{id}', 'show')->name('movements.show');
         }
     );
 
@@ -75,6 +78,6 @@ Route::controller(OptionProductController::class)->prefix('option-products')
             Route::post('/', 'store')->name('optionProducts.store');
             Route::post('/values', 'addValues')->name('optionProducts.addValues');
             Route::get('/{id}', 'show')->name('optionProducts.show');
-            Route::get('/{id}/values', 'getAllValues')->name('optionProducts.getAllValues');
+            Route::get('/{productId}/values/{optionId}', 'getAllValues')->name('optionProducts.getAllValues');
         }
     );

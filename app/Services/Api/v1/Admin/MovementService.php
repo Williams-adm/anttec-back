@@ -2,22 +2,22 @@
 
 namespace App\Services\Api\v1\Admin;
 
-use App\Contracts\Api\v1\Admin\InventoryMovementInterface;
+use App\Contracts\Api\v1\Admin\MovementInterface;
 use App\Exceptions\Api\v1\General\InsufficentStockException;
 use App\Models\BranchVariant;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @extends BaseService<InventoryMovementInterface>
+ * @extends BaseService<MovementInterface>
  */
-class InventoryMovementService extends BaseService
+class MovementService extends BaseService
 {
-    public function __construct(InventoryMovementInterface $repository)
+    public function __construct(MovementInterface $repository)
     {
         parent::__construct($repository);
     }
 
-    public function create(array $data): array
+    public function create(array $data): Model
     {
         if ($data['type'] === 'outflow') {
             foreach ($data['variants'] as $variantData) {

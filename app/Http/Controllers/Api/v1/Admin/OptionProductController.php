@@ -48,9 +48,9 @@ class OptionProductController extends Controller
         ], 201);
     }
 
-    public function getAllValues(int $id): JsonResponse
+    public function getAllValues(int $productId, int $optionId): JsonResponse
     {
-        $model = $this->service->getAllValues($id);
+        $model = $this->service->getAllValues($productId, $optionId);
         return response()->json([
             'success' => true,
             'message' => 'Exitoso',

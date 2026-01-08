@@ -4,10 +4,11 @@ namespace App\Providers;
 
 use App\Contracts\Api\v1\Admin\BaseInterface;
 use App\Contracts\Api\v1\Admin\BranchInterface;
+use App\Contracts\Api\v1\Admin\BranchVariantInterface;
 use App\Contracts\Api\v1\Admin\BrandInterface;
 use App\Contracts\Api\v1\Admin\CategoryInterface;
 use App\Contracts\Api\v1\Admin\CoverInterface;
-use App\Contracts\Api\v1\Admin\InventoryMovementInterface;
+use App\Contracts\Api\v1\Admin\MovementInterface;
 use App\Contracts\Api\v1\Admin\OptionInterface;
 use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Contracts\Api\v1\Admin\OptionValueInterface;
@@ -18,10 +19,11 @@ use App\Contracts\Api\v1\Admin\VariantInterface;
 use App\Contracts\Api\v1\Auth\AuthInterface;
 use App\Repositories\Api\v1\Admin\BaseRepository;
 use App\Repositories\Api\v1\Admin\BranchRepository;
+use App\Repositories\Api\v1\Admin\BranchVariantRepository;
 use App\Repositories\Api\v1\Admin\BrandRepository;
 use App\Repositories\Api\v1\Admin\CategoryRepository;
 use App\Repositories\Api\v1\Admin\CoverRepository;
-use App\Repositories\Api\v1\Admin\InventoryMovementRepository;
+use App\Repositories\Api\v1\Admin\MovementRepository;
 use App\Repositories\Api\v1\Admin\OptionProductRepository;
 use App\Repositories\Api\v1\Admin\OptionRepository;
 use App\Repositories\Api\v1\Admin\OptionValueRepository;
@@ -52,7 +54,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(OptionProductInterface::class, OptionProductRepository::class);
         $this->app->bind(BranchInterface::class, BranchRepository::class);
         $this->app->bind(VariantInterface::class, VariantRepository::class);
-        $this->app->bind(InventoryMovementInterface::class, InventoryMovementRepository::class);
+        $this->app->bind(MovementInterface::class, MovementRepository::class);
+        $this->app->bind(BranchVariantInterface::class, BranchVariantRepository::class);
     }
 
     /**

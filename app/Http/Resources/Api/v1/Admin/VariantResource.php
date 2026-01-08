@@ -34,10 +34,10 @@ class VariantResource extends JsonResource
             ]),
             'features' => $this->whenLoaded('optionProductValues', function () {
                 return $this->optionProductValues->map(function ($feature) {
-                    return [    
+                    return [
                         'id' => $feature->option_value_id,
-                        'option' => $feature->optionProduct->name,
-                        'type   ' => $feature->optionProduct->type,
+                        'option' => $feature->optionValue->option->name,
+                        'type   ' => $feature->optionValue->option->type,
                         'value' => $feature->optionValue->value,
                         'description' => $feature->optionValue->description,
                     ];

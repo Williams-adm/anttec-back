@@ -33,10 +33,10 @@ class OptionProductService
         return $this->repository->addValues($data);
     }
 
-    public function getAllValues(int $id): Collection
+    public function getAllValues(int $productId, int $optionId): Collection
     {
         try {
-            return $this->repository->getAllValues($id);
+            return $this->repository->getAllValues($productId, $optionId);
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException();
         }
