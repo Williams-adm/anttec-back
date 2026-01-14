@@ -16,14 +16,14 @@ class CategoryMController extends Controller
 
     public function getAllList(): JsonResponse
     {
-        $array = CategoryMResource::collection(
+        $response = CategoryMResource::collection(
             $this->service->getAllList()
-        )->response()->getData(true);
+        );
 
         return response()->json([
             'success' => true,
             'message' => 'Listado exitoso',
-            'data' => $array['data'],
+            'data' => $response,
         ], 200);
     }
 

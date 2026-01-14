@@ -15,14 +15,14 @@ class BrandMController extends Controller
 
     public function getAllList(): JsonResponse
     {
-        $array = BrandMResource::collection(
+        $response = BrandMResource::collection(
             $this->service->getAllList()
-        )->response()->getData(true);
+        );
 
         return response()->json([
             'success' => true,
             'message' => 'Listado exitoso',
-            'data' => $array['data'],
+            'data' => $response,
         ], 200);
     }
 }

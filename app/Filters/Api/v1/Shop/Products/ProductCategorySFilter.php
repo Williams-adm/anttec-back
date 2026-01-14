@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filters\Api\v1\Mobile\Products;
+namespace App\Filters\Api\v1\Shop\Products;
 
 use Closure;
 
-class ProductCategoryFilter
+class ProductCategorySFilter
 {
     public function handle($query, Closure $next)
     {

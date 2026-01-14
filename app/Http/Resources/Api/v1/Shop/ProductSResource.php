@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Api\v1\Mobile;
+namespace App\Http\Resources\Api\v1\Shop;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class ProductMResource extends JsonResource
+class ProductSResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -4,7 +4,7 @@ namespace App\Filters\Api\v1\Mobile\Products;
 
 use Closure;
 
-class ProductBrandFilter
+class ProductBrandMFilter
 {
     //validar que la brand_id pasada exista
     public function handle($query, Closure $next)

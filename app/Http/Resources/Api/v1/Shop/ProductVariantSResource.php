@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Api\v1\Mobile;
+namespace App\Http\Resources\Api\v1\Shop;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class ProductVariantMResource extends JsonResource
+class ProductVariantSResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,6 @@ class ProductVariantMResource extends JsonResource
     public function toArray(Request $request): array
     {
         $variantId = (int) $request->route('variantId');
-        $variantSku = $request->route('sku');
 
         return [
             'id'          => $this->id,
@@ -24,6 +23,19 @@ class ProductVariantMResource extends JsonResource
             'model'        => $this->model,
             'description' => $this->description,
             'brand' => $this->whenLoaded('brand', fn() => $this->brand->name),
+            'category' => $this->whenLoaded('subcategory', function () {
+                return [
+                    'id' => $this->subcategory->category->id,
+                    'name' => $this->subcategory->category->name,
+                ];
+            }),
+
+            'subcategory' => $this->whenLoaded('subcategory', function () {
+                return [
+                    'id' => $this->subcategory->id,
+                    'name' => $this->subcategory->name,
+                ];
+            }),
             'specifications' => $this->whenLoaded('specifications', function () {
                 return $this->specifications->map(function ($spec) {
                     return [
@@ -32,18 +44,17 @@ class ProductVariantMResource extends JsonResource
                     ];
                 });
             }),
-            'selected_variant' => $this->whenLoaded('variants', function () use ($variantId, $variantSku) {
-                $variant = $variantId
-                    ? $this->variants->firstWhere('id', $variantId)
-                    : $this->variants->firstWhere('sku', $variantSku);
+            'selected_variant' => $this->whenLoaded('variants', function () use ($variantId) {
+                $variant = $this->variants->firstWhere('id', $variantId);
 
                 return $variant ? [
                     'id'    => $variant->id,
                     'sku'   => $variant->sku,
                     'price' => $variant->selling_price,
-                    'stock' => optional(
-                        $variant->branches->first()?->pivot
-                    )->stock ?? 0,
+                    'stock' => $variant->branches
+                        ->first()
+                        ->pivot
+                        ->stock ?? 0,
                     'images' => $variant->images
                         ->map(fn($img) => [
                             'url' => Storage::url($img->path),
@@ -63,7 +74,7 @@ class ProductVariantMResource extends JsonResource
             'variants' => $this->whenLoaded('variants', function () {
                 return $this->variants->map(function ($variant) {
                     return [
-                        'id'        => $variant->id,
+                        'id' => $variant->id,
                         'features' => $variant->optionProductValues->map(function ($feature) {
                             return [
                                 'id' => $feature->option_value_id,

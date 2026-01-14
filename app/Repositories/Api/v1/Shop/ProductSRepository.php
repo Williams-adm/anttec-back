@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Repositories\Api\v1\Mobile;
+namespace App\Repositories\Api\v1\Shop;
 
-use App\Contracts\Api\v1\Mobile\ProductMInterface;
-use App\Filters\Api\v1\Mobile\Products\ProductBrandMFilter;
-use App\Filters\Api\v1\Mobile\Products\ProductCategoryMFilter;
-use App\Filters\Api\v1\Mobile\Products\ProductPriceMFilter;
-use App\Filters\Api\v1\Mobile\Products\ProductSubcategoryMFilter;
+use App\Contracts\Api\v1\Shop\ProductSInterface;
+use App\Filters\Api\v1\Shop\Products\ProductCategorySFilter;
+use App\Filters\Api\v1\Shop\Products\ProductSubcategorySFilter;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
-class ProductMRepository implements ProductMInterface
+class ProductSRepository implements ProductSInterface
 {
     private int $branchId = 1;
 
@@ -42,10 +41,8 @@ class ProductMRepository implements ProductMInterface
             ]);
 
         $filters = [
-            ProductBrandMFilter::class,
-            ProductCategoryMFilter::class,
-            ProductSubcategoryMFilter::class,
-            ProductPriceMFilter::class,
+            ProductCategorySFilter::class,
+            ProductSubcategorySFilter::class,
         ];
 
         $query = app(Pipeline::class)
@@ -54,6 +51,34 @@ class ProductMRepository implements ProductMInterface
             ->thenReturn();
 
         return $query->paginate($pagination);
+    }
+
+    public function getAllLasts(): Collection
+    {
+        return Product::query()
+            ->whereHas('variants.branches', function ($q) {
+                $q->where('branch_id', $this->branchId);
+            })
+            ->with([
+                'brand',
+                'variants' => function ($q) {
+                    $q->whereHas('branches', function ($b) {
+                        $b->where('branch_id', $this->branchId);
+                    })
+                        ->with([
+                            'images' => function ($img) {
+                                $img->orderBy('id')->limit(1);
+                            },
+                            'branches' => function ($b) {
+                                $b->where('branch_id', $this->branchId);
+                            }
+                        ])
+                        ->orderBy('selling_price', 'asc')
+                        ->limit(1);
+                }
+            ])->orderBy('created_at', 'desc') // últimos
+            ->limit(16)
+            ->get();
     }
 
     public function getAllVariants(int $productId, int $variantId): Model
@@ -65,6 +90,7 @@ class ProductMRepository implements ProductMInterface
             })
             ->with([
                 'brand',
+                'subcategory',
                 'specifications',
                 'variants' => function ($q) {
                     $q->with([

@@ -4,7 +4,7 @@ namespace App\Filters\Api\v1\Mobile\Products;
 
 use Closure;
 
-class ProductPriceFilter
+class ProductPriceMFilter
 {
     public function handle($query, Closure $next)
     {
