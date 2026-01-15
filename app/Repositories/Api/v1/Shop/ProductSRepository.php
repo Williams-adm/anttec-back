@@ -76,7 +76,7 @@ class ProductSRepository implements ProductSInterface
                         ->orderBy('selling_price', 'asc')
                         ->limit(1);
                 }
-            ])->orderBy('created_at', 'desc') // últimos
+            ])->orderBy('created_at', 'asc') // últimos
             ->limit(16)
             ->get();
     }
