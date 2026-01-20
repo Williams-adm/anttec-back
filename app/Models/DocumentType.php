@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class DocumentType extends Model
 {
@@ -16,5 +17,10 @@ class DocumentType extends Model
     public function documentNumbers(): HasMany
     {
         return $this->hasMany(DocumentNumber::class);
+    }
+
+    public function documentable(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

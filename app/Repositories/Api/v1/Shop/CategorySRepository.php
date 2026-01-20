@@ -14,7 +14,7 @@ class CategorySRepository implements CategorySInterface
         return Category::with('subcategories')->get();
     }
 
-    public function getById(int $id): Category
+    public function getById(int $id): Model
     {
         /* return Category::select('id', 'name')->findOrFail($id); */
         return Category::with('subcategories')->findOrFail($id);

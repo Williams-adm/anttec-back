@@ -1,13 +1,27 @@
 <?php
 
+use App\Http\Controllers\Api\v1\Shop\CartSController;
 use App\Http\Controllers\Api\v1\Shop\CategorySController;
 use App\Http\Controllers\Api\v1\Shop\CoverSController;
 use App\Http\Controllers\Api\v1\Shop\ProductSController;
+use App\Http\Middleware\Api\v1\OptionalSanctumAuth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('categories', [CategorySController::class, 'getAll'])->name('categories.getAll');
 Route::get('categories/{id}', [CategorySController::class, 'show'])->name('categories.show');
 Route::get('covers', [CoverSController::class, 'getAll'])->name('covers.getAll');
+Route::post('cart/merge', [CartSController::class, 'merge'])->name('cart.merge')->middleware('auth:sanctum');
+
+Route::controller(CartSController::class)->prefix('cart')->middleware(OptionalSanctumAuth::class)
+    ->group(
+        function () {
+            Route::get('/', 'getCart')->name('cart.getCart');
+            Route::post('/addItem', 'addItem')->name('cart.addItem');
+            Route::put('/updateItem/{id}', 'updateItem')->name('cart.updateItem');
+            Route::delete('/removeItem/{id}', 'removeItem')->name('cart.removeItem');
+            Route::delete('/delete', 'deleteCart')->name('cart.deleteCart');
+        }
+    );
 
 Route::controller(ProductSController::class)->prefix('products')
     ->group(

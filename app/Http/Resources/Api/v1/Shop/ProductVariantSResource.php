@@ -49,6 +49,7 @@ class ProductVariantSResource extends JsonResource
 
                 return $variant ? [
                     'id'    => $variant->id,
+                    'branch_variant_id' => $variant->branches->first()->pivot->id,
                     'sku'   => $variant->sku,
                     'price' => $variant->selling_price,
                     'stock' => $variant->branches
@@ -75,6 +76,7 @@ class ProductVariantSResource extends JsonResource
                 return $this->variants->map(function ($variant) {
                     return [
                         'id' => $variant->id,
+                        'branch_variant_id' => $variant->branches->first()->pivot->id,
                         'features' => $variant->optionProductValues->map(function ($feature) {
                             return [
                                 'id' => $feature->option_value_id,

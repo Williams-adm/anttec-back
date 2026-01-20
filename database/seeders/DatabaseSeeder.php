@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             SpecificationSeeder::class,
             PrefixSeeder::class,
             BranchSeeder::class,
-            AddressSeeder::class
+            AddressSeeder::class,
+            PaymentMethodSeeder::class,
         ]);
     }
 }
