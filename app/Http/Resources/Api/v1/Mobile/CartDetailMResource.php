@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Api\v1\Shop\Cart;
+namespace App\Http\Resources\Api\v1\Mobile;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class CartDetailSResource extends JsonResource
+class CartDetailMResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -27,7 +27,6 @@ class CartDetailSResource extends JsonResource
 
                 return [
                     'id' => $variant->id,
-                    'sku' => $variant->sku,
                     'product_id' => $product->id,
                     'name' => $product?->name,
                     'model' => $product?->model,

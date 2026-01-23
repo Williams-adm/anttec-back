@@ -26,8 +26,8 @@ class BranchResource extends JsonResource
             ],
             'address' => [
                 'id' => $this->address->id,
-                'street' => $this->address->street->name . ' #' . $this->address->street->number,
-                'distric' => $this->address->street->distric->name,
+                'distric' => $this->address->district->name,
+                'street' => $this->address->street . ' #' . $this->address->street_number,
             ]
         ];
     }
