@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->boolean('favorite');
+            $table->string('street', length: 150);
+            $table->unsignedInteger('street_number');
             $table->string('reference', length: 150);
             $table->morphs('addressable');
 
-            $table->foreignId('street_id')->constrained()
+            $table->foreignId('district_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();

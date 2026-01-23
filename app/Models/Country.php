@@ -9,6 +9,12 @@ class Country extends Model
 {
     protected $fillable = [
         'name',
+        'iso_code',
+        'status',
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
     ];
 
     public function departaments(): HasMany

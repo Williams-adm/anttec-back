@@ -44,10 +44,7 @@ class BranchRepository extends BaseRepository implements BranchInterface
             }
 
             if (!empty($phoneData)) {
-                $branch->phone()->update([
-                    'prefix_id' => $phoneData['prefix'],
-                    'number' => $phoneData['number'],
-                ]);
+                $branch->phone()->update($phoneData);
             }
 
             DB::commit();

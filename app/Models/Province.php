@@ -10,16 +10,21 @@ class Province extends Model
 {
     protected $fillable = [
         'name',
-        'shipment_cost',
+        'status',
+        'department_id',
     ];
 
-    public function departament(): BelongsTo
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
+    public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
     }
 
-    public function districs(): HasMany
+    public function districts(): HasMany
     {
-        return $this->hasMany(Distric::class);
+        return $this->hasMany(District::class);
     }
 }

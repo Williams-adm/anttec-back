@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
             $table->string('name', length: 80)->unique();
-            $table->decimal('shipment_cost', total:8, places: 2);
+            $table->boolean('status')->default(true);
 
             $table->foreignId('department_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();

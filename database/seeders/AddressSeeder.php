@@ -15,7 +15,8 @@ class AddressSeeder extends Seeder
     public function run(): void
     {
         $country = Country::firstOrCreate([
-            'name' => 'Peru'
+            'name' => 'Peru',
+            'iso_code' => 'PE',
         ]);
 
         $departament = $country->departaments()->firstOrCreate([
@@ -23,23 +24,25 @@ class AddressSeeder extends Seeder
         ]);
 
         $province = $departament->provinces()->firstOrCreate(
-            ['name' => 'Junin'],
-            ['shipment_cost' => 10.0]
+            ['name' => 'Huancayo'],
         );
 
-        $district = $province->districs()->firstOrCreate([
-            'name' => 'Junin',
+        $district = $province->districts()->firstOrCreate([
+            'name' => 'Huancayo',
         ]);
 
-        $street = $district->streets()->firstOrCreate(
-            ['name' => 'Av. Giraldez'],
-            ['number' => 3202],
-        );
+        $district->shippingRate()->create([
+            'delivery_price' => 0,
+            'min_delivery_days' => 0,
+            'max_delivery_days' => 1,
+        ]);
 
         Branch::findOrFail(1)->address()->create([
             'favorite' => true,
+            'street' => 'Av. Giraldez',
+            'street_number' => 3202,
             'reference' => 'Los girasoles',
-            'street_id' => $street->id,
+            'district_id' => $district->id,
         ]);
     }
 }

@@ -4,12 +4,16 @@ use App\Http\Controllers\Api\v1\Admin\BranchController;
 use App\Http\Controllers\Api\v1\Admin\BranchVariantController;
 use App\Http\Controllers\Api\v1\Admin\BrandController;
 use App\Http\Controllers\Api\v1\Admin\CategoryController;
+use App\Http\Controllers\Api\v1\Admin\CountryController;
 use App\Http\Controllers\Api\v1\Admin\CoverController;
+use App\Http\Controllers\Api\v1\Admin\DepartmentController;
+use App\Http\Controllers\Api\v1\Admin\DistrictController;
 use App\Http\Controllers\Api\v1\Admin\MovementController;
 use App\Http\Controllers\Api\v1\Admin\OptionController;
 use App\Http\Controllers\Api\v1\Admin\OptionProductController;
 use App\Http\Controllers\Api\v1\Admin\OptionValueController;
 use App\Http\Controllers\Api\v1\Admin\ProductController;
+use App\Http\Controllers\Api\v1\Admin\ProvinceController;
 use App\Http\Controllers\Api\v1\Admin\SpecificationController;
 use App\Http\Controllers\Api\v1\Admin\SubcategoryController;
 use App\Http\Controllers\Api\v1\Admin\VariantController;
@@ -22,9 +26,12 @@ Route::get('specifications/list', [SpecificationController::class, 'getAllList']
 Route::get('options/list', [OptionController::class, 'getAllList'])->name('options.list');
 Route::get('variants/list', [VariantController::class, 'getAllList'])->name('variants.list');
 Route::get('branch-variants/list', [BranchVariantController::class, 'getAllList'])->name('branchVariants.list');
+Route::get('countries/list', [CountryController::class, 'getAllList'])->name('countries.list');
 Route::post('covers/order', [CoverController::class, 'reorder'])->name('covers.reorder');
 
 Route::get('categories/{id}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.getSubcategories');
+Route::get('countries/{id}/departments', [CountryController::class, 'getDepartments'])->name('categories.getDepartments');
+Route::get('departments/{id}/provinces', [DepartmentController::class, 'getProvinces'])->name('categories.getProvinces');
 Route::get('options/{id}/values', [OptionController::class, 'getOptionValues'])->name('categories.getOptionValues');
 
 Route::controller(VariantController::class)->prefix('variants')
@@ -44,6 +51,10 @@ Route::apiResources([
     'options' => OptionController::class,
     'branches' => BranchController::class,
     'variants' => VariantController::class,
+    'countries' => CountryController::class,
+    'departments' => DepartmentController::class,
+    'provinces' => ProvinceController::class,
+    'districts' => DistrictController::class,
 ]);
 
 Route::controller(MovementController::class)->prefix('movements')

@@ -10,8 +10,14 @@ class Department extends Model
 {
     protected $fillable = [
         'name',
+        'status',
+        'country_id'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+    
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);

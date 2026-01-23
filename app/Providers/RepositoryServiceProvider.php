@@ -7,12 +7,16 @@ use App\Contracts\Api\v1\Admin\BranchInterface;
 use App\Contracts\Api\v1\Admin\BranchVariantInterface;
 use App\Contracts\Api\v1\Admin\BrandInterface;
 use App\Contracts\Api\v1\Admin\CategoryInterface;
+use App\Contracts\Api\v1\Admin\CountryInterface;
 use App\Contracts\Api\v1\Admin\CoverInterface;
+use App\Contracts\Api\v1\Admin\DepartmentInterface;
+use App\Contracts\Api\v1\Admin\DistrictInterface;
 use App\Contracts\Api\v1\Admin\MovementInterface;
 use App\Contracts\Api\v1\Admin\OptionInterface;
 use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Contracts\Api\v1\Admin\OptionValueInterface;
 use App\Contracts\Api\v1\Admin\ProductInterface;
+use App\Contracts\Api\v1\Admin\ProvinceInterface;
 use App\Contracts\Api\v1\Admin\SpecificationInterface;
 use App\Contracts\Api\v1\Admin\SubcategoryInterface;
 use App\Contracts\Api\v1\Admin\VariantInterface;
@@ -22,12 +26,16 @@ use App\Repositories\Api\v1\Admin\BranchRepository;
 use App\Repositories\Api\v1\Admin\BranchVariantRepository;
 use App\Repositories\Api\v1\Admin\BrandRepository;
 use App\Repositories\Api\v1\Admin\CategoryRepository;
+use App\Repositories\Api\v1\Admin\CountryRepository;
 use App\Repositories\Api\v1\Admin\CoverRepository;
+use App\Repositories\Api\v1\Admin\DepartmentRepository;
+use App\Repositories\Api\v1\Admin\DistrictRepository;
 use App\Repositories\Api\v1\Admin\MovementRepository;
 use App\Repositories\Api\v1\Admin\OptionProductRepository;
 use App\Repositories\Api\v1\Admin\OptionRepository;
 use App\Repositories\Api\v1\Admin\OptionValueRepository;
 use App\Repositories\Api\v1\Admin\ProductRepository;
+use App\Repositories\Api\v1\Admin\ProvinceRepository;
 use App\Repositories\Api\v1\Admin\SpecificationRepository;
 use App\Repositories\Api\v1\Admin\SubcategoryRepository;
 use App\Repositories\Api\v1\Admin\VariantRepository;
@@ -56,6 +64,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(VariantInterface::class, VariantRepository::class);
         $this->app->bind(MovementInterface::class, MovementRepository::class);
         $this->app->bind(BranchVariantInterface::class, BranchVariantRepository::class);
+        $this->app->bind(CountryInterface::class, CountryRepository::class);
+        $this->app->bind(DepartmentInterface::class, DepartmentRepository::class);
+        $this->app->bind(ProvinceInterface::class, ProvinceRepository::class);
+        $this->app->bind(DistrictInterface::class, DistrictRepository::class);
     }
 
     /**

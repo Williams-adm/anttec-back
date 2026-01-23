@@ -11,18 +11,26 @@ class Address extends Model
 {
     protected $fillable = [
         'favorite',
+        'street',
+        'street_number',
         'reference',
+        'distric_id',
         'addressable_id',
         'addressable_type',
     ];
 
-    public function street(): BelongsTo
+    public function district(): BelongsTo
     {
-        return $this->belongsTo(Street::class);
+        return $this->belongsTo(District::class);
     }
 
     public function addressable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function shippingRate(): MorphOne
+    {
+        return $this->morphOne(ShippingRate::class, 'shippable');
     }
 }
