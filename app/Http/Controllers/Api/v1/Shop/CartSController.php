@@ -36,7 +36,7 @@ class CartSController extends Controller
                 'data' => [
                     'cart' => [],
                     'totals' => [
-                        'subtotal' => 0,
+                        'items' => 0,
                         'total' => 0
                     ]
                 ]
