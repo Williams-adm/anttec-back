@@ -44,7 +44,7 @@ class VariantBarcodeService
             ];
         }
 
-        $pdf = Pdf::loadView('admin.barcodes.template', [
+        $pdf = Pdf::loadView('Admin.barcodes.template', [
             'barcodes' => $barcodeData
         ]);
 
