@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Códigos de Barras</title>
+
     <style>
         * {
             margin: 0;
@@ -11,18 +13,27 @@
             box-sizing: border-box;
         }
 
+        /* Márgenes reales de impresión */
         @page {
-            margin: 15mm;
+            margin-top: 20mm;
+            margin-bottom: 20mm;
+            margin-left: 22mm;
+            margin-right: 15mm;
         }
 
         body {
             font-family: Arial, sans-serif;
             font-size: 10px;
+            padding-top: 18mm;
+            margin-left: 30mm;
+            margin-right: 30mm;
+            padding-bottom: 10mm;
         }
 
+        /* Cada variante es un bloque completo */
         .variant-group {
             page-break-inside: avoid;
-            margin-bottom: 20px;
+            break-inside: avoid;
         }
 
         .variant-header {
@@ -30,7 +41,6 @@
             padding: 10px 15px;
             margin-bottom: 15px;
             border-left: 4px solid #3b82f6;
-            page-break-after: avoid;
         }
 
         .variant-name {
@@ -45,11 +55,13 @@
             color: #6b7280;
         }
 
+        /* Grid de códigos */
         .barcodes-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            break-inside: auto;
         }
 
         .barcode-item {
@@ -57,13 +69,15 @@
             padding: 10px;
             border: 1px solid #e5e7eb;
             border-radius: 4px;
-            page-break-inside: avoid;
             background-color: #ffffff;
+
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
 
         .barcode-image {
-            margin: 8px auto;
             display: block;
+            margin: 8px auto;
             max-width: 100%;
             height: auto;
         }
@@ -76,41 +90,43 @@
             color: #111827;
             font-family: 'Courier New', monospace;
         }
-
-        .page-break {
-            page-break-before: always;
-        }
-
-        /* Alternativa: 5 columnas si prefieres más códigos por fila */
-        /* .barcodes-grid {
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-        } */
     </style>
 </head>
+
 <body>
-    @foreach($barcodes as $barcodeGroup)
+
+    @foreach ($barcodes as $barcodeGroup)
         <div class="variant-group">
-            <!-- Header de la variante (solo una vez) -->
+
+            <!-- Header de la variante -->
             <div class="variant-header">
-                <div class="variant-name">{{ $barcodeGroup['variant_name'] }}</div>
-                @if(!empty($barcodeGroup['features']))
-                    <div class="variant-features">{{ $barcodeGroup['features'] }}</div>
+                <div class="variant-name">
+                    {{ $barcodeGroup['variant_name'] }}
+                </div>
+
+                @if (!empty($barcodeGroup['features']))
+                    <div class="variant-features">
+                        {{ $barcodeGroup['features'] }}
+                    </div>
                 @endif
             </div>
 
-            <!-- Grid de códigos de barras -->
+            <!-- Grid de códigos -->
             <div class="barcodes-grid">
-                @for($i = 0; $i < $barcodeGroup['quantity']; $i++)
+                @for ($i = 0; $i < $barcodeGroup['quantity']; $i++)
                     <div class="barcode-item">
-                        <img src="data:image/png;base64,{{ $barcodeGroup['barcode'] }}"
-                             alt="Código de barras"
-                             class="barcode-image">
-                        <div class="sku-text">{{ $barcodeGroup['sku'] }}</div>
+                        <img src="data:image/png;base64,{{ $barcodeGroup['barcode'] }}" alt="Código de barras"
+                            class="barcode-image">
+                        <div class="sku-text">
+                            {{ $barcodeGroup['sku'] }}
+                        </div>
                     </div>
                 @endfor
             </div>
+
         </div>
     @endforeach
+
 </body>
+
 </html>
