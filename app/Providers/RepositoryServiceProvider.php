@@ -19,6 +19,7 @@ use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Contracts\Api\v1\Admin\ProvinceInterface;
 use App\Contracts\Api\v1\Admin\SpecificationInterface;
 use App\Contracts\Api\v1\Admin\SubcategoryInterface;
+use App\Contracts\Api\v1\Admin\UserInterface;
 use App\Contracts\Api\v1\Admin\VariantInterface;
 use App\Contracts\Api\v1\Auth\AuthInterface;
 use App\Repositories\Api\v1\Admin\BaseRepository;
@@ -38,6 +39,7 @@ use App\Repositories\Api\v1\Admin\ProductRepository;
 use App\Repositories\Api\v1\Admin\ProvinceRepository;
 use App\Repositories\Api\v1\Admin\SpecificationRepository;
 use App\Repositories\Api\v1\Admin\SubcategoryRepository;
+use App\Repositories\Api\v1\Admin\UserRepository;
 use App\Repositories\Api\v1\Admin\VariantRepository;
 use App\Repositories\Api\v1\Auth\AuthRepository;
 use Illuminate\Support\ServiceProvider;
@@ -68,6 +70,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DepartmentInterface::class, DepartmentRepository::class);
         $this->app->bind(ProvinceInterface::class, ProvinceRepository::class);
         $this->app->bind(DistrictInterface::class, DistrictRepository::class);
+        $this->app->bind(UserInterface::class, UserRepository::class);
     }
 
     /**

@@ -16,10 +16,12 @@ use App\Http\Controllers\Api\v1\Admin\ProductController;
 use App\Http\Controllers\Api\v1\Admin\ProvinceController;
 use App\Http\Controllers\Api\v1\Admin\SpecificationController;
 use App\Http\Controllers\Api\v1\Admin\SubcategoryController;
+use App\Http\Controllers\Api\v1\Admin\UserController;
 use App\Http\Controllers\Api\v1\Admin\VariantBarcodeController;
 use App\Http\Controllers\Api\v1\Admin\VariantController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('users', [UserController::class, 'store'])->name('users.store');
 Route::post('variants/barcodes/generate', [VariantBarcodeController::class, 'generate'])->name('variantBarcodes.generate');
 Route::get('categories/list', [CategoryController::class, 'getAllList'])->name('categories.list');
 Route::get('subcategories/list', [SubcategoryController::class, 'getAllList'])->name('subcategories.list');

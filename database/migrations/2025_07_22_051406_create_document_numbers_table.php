@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('document_numbers', function (Blueprint $table) {
             $table->id();
-            $table->string('number', length:20)->unique();
+            $table->string('number', length:20);
             $table->morphs('documentable');
 
             $table->foreignId('document_type_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
 
+            $table->unique(['number', 'documentable_type']);
             $table->timestamps();
         });
     }

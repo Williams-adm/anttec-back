@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Dom\DocumentType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,9 +36,9 @@ class Employee extends Model
         return $this->morphOne(Phone::class, 'phoneable');
     }
 
-    public function documentType(): MorphOne
+    public function documentNumber(): MorphOne
     {
-        return $this->morphOne(DocumentType::class, 'documentable');
+        return $this->morphOne(DocumentNumber::class, 'documentable');
     }
 
     public function orders(): HasMany

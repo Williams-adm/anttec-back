@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             AddressSeeder::class,
             PaymentMethodSeeder::class,
+            RolePermissionSeeder::class,
+            DocumentTypeSeeder::class,
         ]);
     }
 }

@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class DocumentNumber extends Model
 {
     protected $fillable = [
-        'type'
+        'number',
+        'documentable_id',
+        'documentable_type',
+        'document_type_id',
     ];
 
     public function documentType(): BelongsTo
@@ -16,5 +20,8 @@ class DocumentNumber extends Model
         return $this->belongsTo(DocumentType::class);
     }
 
-    //falta definir la relacion polimorfica
+    public function documentable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }
