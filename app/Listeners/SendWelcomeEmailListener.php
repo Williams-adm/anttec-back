@@ -17,6 +17,8 @@ class SendWelcomeEmailListener implements ShouldQueue
      */
     public $tries = 3;
 
+    public $queue = 'emails';
+    
     /**
      * Create the event listener.
      */
