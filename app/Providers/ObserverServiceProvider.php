@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Address;
 use App\Models\Cover;
+use App\Observers\Api\v1\Admin\AddressSObserver;
 use App\Observers\Api\v1\Admin\CoverObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +24,6 @@ class ObserverServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Cover::observe(CoverObserver::class);
+        Address::observe(AddressSObserver::class);
     }
 }

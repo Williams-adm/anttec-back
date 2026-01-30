@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function addresses(): MorphMany
     {
-        return $this->morphMany(Phone::class, 'addressable');
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     public function carts(): HasMany
