@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('document_types', function (Blueprint $table) {
             $table->id();
-            $table->string('type', length: 10)->unique();
+            $table->enum('type', ['DNI', 'CE', 'RUC'])->unique();
             $table->timestamps();
         });
     }

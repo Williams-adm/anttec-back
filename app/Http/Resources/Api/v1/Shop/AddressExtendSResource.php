@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api\v1\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AddressSResource extends JsonResource
+class AddressExtendSResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,9 +25,18 @@ class AddressSResource extends JsonResource
             "street_number" => $this->street_number,
             "reference" => $this->reference,
             "favorite" => $this->favorite,
-            "district" => $this->district->name,
-            "province" => $this->district->province->name,
-            "department" => $this->district->province->department->name,
+            "district" => [
+                'id' => $this->district->id,
+                'name' => $this->district->name,
+            ],
+            "province" => [
+                'id' => $this->district->province->id,
+                'name' => $this->district->province->name
+            ],
+            "department" => [
+                'id' => $this->district->province->department->id,
+                'name' => $this->district->province->department->name
+            ],
             "delivery_price" => $this->district->shippingRate->delivery_price,
         ];
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\v1\Shop\Address;
 
+use App\Exceptions\Api\v1\NotFoundException;
+use App\Models\Address;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAddressSRequest extends FormRequest
@@ -50,5 +52,14 @@ class UpdateAddressSRequest extends FormRequest
                 'boolean:strict'
             ]
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $id = $this->route('address');
+        $cover = Address::find($id);
+        if (!$cover) {
+            throw new NotFoundException();
+        }
     }
 }

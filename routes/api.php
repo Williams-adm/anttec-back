@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\v1\Shop\BranchSController;
 use App\Http\Controllers\Api\v1\Shop\CartSController;
 use App\Http\Controllers\Api\v1\Shop\CategorySController;
 use App\Http\Controllers\Api\v1\Shop\CoverSController;
+use App\Http\Controllers\Api\v1\Shop\CustomerSController;
 use App\Http\Controllers\Api\v1\Shop\LocationSController;
 use App\Http\Controllers\Api\v1\Shop\ProductSController;
 use App\Http\Middleware\Api\v1\OptionalSanctumAuth;
@@ -43,5 +44,6 @@ Route::middleware('auth:sanctum')->group(
         Route::get('locations/departments', [LocationSController::class, 'getAllDepartments'])->name('locations.getAllDepartments');
         Route::get('locations/{id}/provinces', [LocationSController::class, 'getProvinces'])->name('locations.getProvinces');
         Route::get('locations/{id}/districts', [LocationSController::class, 'getDistricts'])->name('locations.getDistricts');
+        Route::get('customers/{dni}', [CustomerSController::class, 'searchDNI'])->name('customers.searchDNI');
     }
 );

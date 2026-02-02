@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Shop;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Shop\Address\StoreAddressSRequest;
 use App\Http\Requests\Api\v1\Shop\Address\UpdateAddressSRequest;
+use App\Http\Resources\Api\v1\Shop\AddressExtendSResource;
 use App\Http\Resources\Api\v1\Shop\AddressSResource;
 use App\Services\Api\v1\Shop\AddressSService;
 use Illuminate\Http\JsonResponse;
@@ -38,7 +39,7 @@ class AddressSController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Listado exitoso',
-            'data' => new AddressSResource($model),
+            'data' => new AddressExtendSResource($model),
         ], 200);
     }
 
@@ -73,7 +74,7 @@ class AddressSController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Registro actualizado',
-            'data' => new AddressSResource($model),
+            'data' => new AddressExtendSResource($model),
         ], 200);
     }
 

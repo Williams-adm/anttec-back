@@ -16,7 +16,6 @@ class DocumentTypeSeeder extends Seeder
         $documents = [
             'DNI',
             'CE',
-            'Pasaporte',
             'RUC',
         ];
 

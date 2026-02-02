@@ -9,6 +9,7 @@ use App\Contracts\Api\v1\Shop\CartDetailSInterface;
 use App\Contracts\Api\v1\Shop\CartSInterface;
 use App\Contracts\Api\v1\Shop\CategorySInterface;
 use App\Contracts\Api\v1\Shop\CoverSInterface;
+use App\Contracts\Api\v1\Shop\CustomerSInterface;
 use App\Contracts\Api\v1\Shop\LocationSInterface;
 use App\Contracts\Api\v1\Shop\ProductSInterface;
 use App\Contracts\Api\v1\Shop\UserSInterface;
@@ -19,6 +20,7 @@ use App\Repositories\Api\v1\Shop\CartDetailSRepository;
 use App\Repositories\Api\v1\Shop\CartSRepository;
 use App\Repositories\Api\v1\Shop\CategorySRepository;
 use App\Repositories\Api\v1\Shop\CoverSRepository;
+use App\Repositories\Api\v1\Shop\CustomerSRepository;
 use App\Repositories\Api\v1\Shop\LocationSRepository;
 use App\Repositories\Api\v1\Shop\ProductSRepository;
 use App\Repositories\Api\v1\Shop\UserSRepository;
@@ -41,6 +43,7 @@ class RepositorySServiceProvider extends ServiceProvider
         $this->app->bind(BranchSInterface::class, BranchSRepository::class);
         $this->app->bind(AddressSInterface::class, AddressSRepository::class);
         $this->app->bind(LocationSInterface::class, LocationSRepository::class);
+        $this->app->bind(CustomerSInterface::class, CustomerSRepository::class);
     }
 
     /**
