@@ -17,4 +17,13 @@ class CustomerSRepository implements CustomerSInterface
             ->first();
         return $doc?->documentable;
     }
+
+    public function getBYCustomerRUC(string $ruc): ?Model
+    {
+        $doc = DocumentNumber::where('number', $ruc)
+            ->whereRelation('documentType', 'type', 'RUC')
+            ->where('documentable_type', Customer::class)
+            ->first();
+        return $doc?->documentable;
+    }
 }

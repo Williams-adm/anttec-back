@@ -28,4 +28,21 @@ class CustomerSController extends Controller
 
         return response()->json($result, $httpStatus);
     }
+
+    public function searchRUC(string $ruc)
+    {
+        if (!preg_match('/^\d{11}$/', $ruc)) {
+            return response()->json([
+                'status'   => false,
+                'message' => 'El RUC debe tener exactamente 11 dígitos',
+            ], 422);
+        }
+
+        $result = $this->service->getBYCustomerRUC($ruc);
+
+        // 👇 HTTP status según resultado
+        $httpStatus = $result['status'] ? 200 : 404;
+
+        return response()->json($result, $httpStatus);
+    }
 }

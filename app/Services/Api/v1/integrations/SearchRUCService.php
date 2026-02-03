@@ -5,7 +5,7 @@ namespace App\Services\Api\v1\integrations;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
-class SearchDNIService
+class SearchRUCService
 {
     protected Client $client;
 
@@ -25,11 +25,11 @@ class SearchDNIService
         ]);
     }
 
-    public function searchDNI(string $dni): ?array
+    public function searchRUC(string $ruc): ?array
     {
         try {
-            $response = $this->client->get('/v1/reniec/dni', [
-                'query' => ['numero' => $dni],
+            $response = $this->client->get('/v1/sunat/ruc', [
+                'query' => ['numero' => $ruc],
             ]);
 
             if ($response->getStatusCode() !== 200) {
@@ -39,16 +39,12 @@ class SearchDNIService
             $responseData = json_decode($response->getBody()->getContents(), true);
 
             return [
-                'name'            => $responseData['first_name'] ?? null,
-                'last_name'       => trim(
-                    ($responseData['first_last_name'] ?? '') . ' ' .
-                        ($responseData['second_last_name'] ?? '')
-                ),
-                'document_number' => $responseData['document_number'] ?? $dni,
+                'business_name' => $responseData['razon_social'] ?? null,
+                'tax_address' => $responseData['direccion'] ?? null,
+                'document_number' => $responseData['numero_documento'] ?? $ruc,
             ];
-
         } catch (\Throwable $e) {
-            Log::error("RENIEC error DNI {$dni}: {$e->getMessage()}");
+            Log::error("SUNAT error RUC {$ruc}: {$e->getMessage()}");
             return null;
         }
     }
