@@ -45,4 +45,18 @@ class Variant extends Model
             'option_product_value_id',
         )->withTimestamps();
     }
+
+    #helper
+    public function getFullNameAttribute(): string
+    {
+        $productName = $this->product->name;
+
+        $options = $this->optionProductValues->map(function ($opv) {
+            $optionName = $opv->optionValue->option->name;
+            $optionDescription = $opv->optionValue->description;
+            return "{$optionName}: {$optionDescription}";
+        })->implode(' | ');
+
+        return $options ? "{$productName} - {$options}" : $productName;
+    }
 }

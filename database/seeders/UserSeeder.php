@@ -14,11 +14,22 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $user = User::create([
             'name' => 'Jhonny Stevens',
             'last_name' => 'Romero Linares',
             'email' => 'prueba@gmail.com',
             'password' => Hash::make('12345678'),
+        ]);
+
+        $employee = $user->employee()->create([
+            'salary' => '1500.00',
+            'position' => 'admin',
+            'branch_id' => 1,
+        ]);
+
+        $employee->documentNumber()->create([
+            'number' => '12345678',
+            'document_type_id' => 1
         ]);
     }
 }

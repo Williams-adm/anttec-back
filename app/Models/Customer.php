@@ -23,9 +23,9 @@ class Customer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function documentType(): MorphOne
+    public function documentNumber(): MorphOne
     {
-        return $this->morphOne(DocumentType::class, 'documentable');
+        return $this->morphOne(DocumentNumber::class, 'documentable');
     }
 
     public function orders(): HasMany

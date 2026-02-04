@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order_payment_method', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 12, 2);
-            $table->string('transaction_id', 100)->nullable(); // ID de transacción externa
+            $table->string('transaction_id', 100)->nullable()->unique(); // ID de transacción externa
             /* $table->enum('status', ['pending', 'completed', 'failed', 'refunded'])->default('pending'); */
 
             $table->foreignId('order_id')->constrained()

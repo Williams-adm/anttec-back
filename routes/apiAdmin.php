@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\v1\Admin\MovementController;
 use App\Http\Controllers\Api\v1\Admin\OptionController;
 use App\Http\Controllers\Api\v1\Admin\OptionProductController;
 use App\Http\Controllers\Api\v1\Admin\OptionValueController;
+use App\Http\Controllers\Api\v1\Admin\PaymentMethodController;
 use App\Http\Controllers\Api\v1\Admin\ProductController;
 use App\Http\Controllers\Api\v1\Admin\ProvinceController;
 use App\Http\Controllers\Api\v1\Admin\SpecificationController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\v1\Admin\VariantController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('users', [UserController::class, 'store'])->name('users.store');
+Route::get('payment-methods', [PaymentMethodController::class, 'getAllList'])->name('paymentmethods.getAllList');
 Route::post('variants/barcodes/generate', [VariantBarcodeController::class, 'generate'])->name('variantBarcodes.generate');
 Route::get('categories/list', [CategoryController::class, 'getAllList'])->name('categories.list');
 Route::get('subcategories/list', [SubcategoryController::class, 'getAllList'])->name('subcategories.list');
@@ -32,6 +34,8 @@ Route::get('variants/list', [VariantController::class, 'getAllList'])->name('var
 Route::get('branch-variants/list', [BranchVariantController::class, 'getAllList'])->name('branchVariants.list');
 Route::get('countries/list', [CountryController::class, 'getAllList'])->name('countries.list');
 Route::post('covers/order', [CoverController::class, 'reorder'])->name('covers.reorder');
+Route::get('payment-methods/{id}', [PaymentMethodController::class, 'getById'])->name('paymentmethods.getById');
+Route::put('payment-methods/{id}', [PaymentMethodController::class, 'update'])->name('paymentmethods.update');
 
 Route::get('categories/{id}/subcategories', [CategoryController::class, 'getSubcategories'])->name('categories.getSubcategories');
 Route::get('countries/{id}/departments', [CountryController::class, 'getDepartments'])->name('categories.getDepartments');

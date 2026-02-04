@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment_methods', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
-            $table->enum('name', ['cash', 'card', 'yape', 'plin', 'transfers', 'deposits', 'others']);
-            $table->enum('type', ['cash', 'card', 'wallet', 'other']);
-            $table->boolean('required_qr')->default(false);
-            $table->boolean('status')->default(true);
+            $table->enum('type', ['boleta', 'factura']);
+            $table->string('voucher_number')->unique();
+            $table->string('path');
+
+            $table->foreignId('order_id')->constrained()
+                ->cascadeOnDelete()->cascadeOnUpdate();
+
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payment_methods');
+        Schema::dropIfExists('vouchers');
     }
 };

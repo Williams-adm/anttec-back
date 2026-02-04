@@ -13,12 +13,18 @@ class PaymentMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        $methods = ['cash', 'card', 'yape'];
+        $methods = [
+            ['name' => 'cash',  'type' => 'cash', 'required_qr' => false],
+            ['name' => 'card',  'type' => 'card', 'required_qr' => false],
+            ['name' => 'yape',  'type' => 'wallet', 'required_qr' => true],
+            ['name' => 'plin',  'type' => 'wallet', 'required_qr' => true],
+            ['name' => 'transfers', 'type' => 'other', 'required_qr' => false],
+            ['name' => 'deposits', 'type' => 'other', 'required_qr' => false],
+            ['name' => 'others', 'type' => 'other', 'required_qr' => false],
+        ];
 
         foreach ($methods as $method) {
-            PaymentMethod::create([
-                'name' => $method
-            ]);
+            PaymentMethod::create($method);
         }
     }
 }

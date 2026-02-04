@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\OrderNumberGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
+    use OrderNumberGenerator;
+
     protected $fillable = [
         'order_number',
         'type_sale',
@@ -50,7 +54,7 @@ class Order extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    public function PaymentMethods(): BelongsToMany
+    public function paymentMethods(): BelongsToMany
     {
         return $this->belongsToMany(PaymentMethod::class, 'order_payment_method', 'order_id', 'payment_method_id')
             ->using(OrderPaymentMethod::class)->withPivot('id', 'amount', 'transaction_id')->withTimestamps();
@@ -65,5 +69,21 @@ class Order extends Model
     public function shipment(): HasOne //puede ser hasmany
     {
         return $this->HasOne(Shipment::class);
+    }
+
+    public function voucher(): HasOne
+    {
+        return $this->hasOne(Voucher::class);
+    }
+
+    public function movements(): HasMany
+    {
+        return $this->hasMany(Movement::class);
+    }
+
+    #relacion de ayuda
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
     }
 }

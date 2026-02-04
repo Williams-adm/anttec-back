@@ -10,6 +10,6 @@ class BrandMRepository implements BrandMInterface
 {
     public function getAllList(): Collection
     {
-        return Brand::all();
+        return Brand::orderBy('name', 'asc')->get();
     }
 }

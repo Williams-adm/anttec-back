@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Address;
 use App\Models\Cover;
+use App\Models\Order;
 use App\Observers\Api\v1\Admin\AddressSObserver;
 use App\Observers\Api\v1\Admin\CoverObserver;
+use App\Observers\Api\v1\OrderObserver;
 use Illuminate\Support\ServiceProvider;
 
 class ObserverServiceProvider extends ServiceProvider
@@ -25,5 +27,6 @@ class ObserverServiceProvider extends ServiceProvider
     {
         Cover::observe(CoverObserver::class);
         Address::observe(AddressSObserver::class);
+        Order::observe(OrderObserver::class);
     }
 }

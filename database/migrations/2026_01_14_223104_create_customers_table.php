@@ -16,8 +16,8 @@ return new class extends Migration
             $table->enum('type_customer', ['people', 'company']);
             $table->string('name', length: 60)->nullable();
             $table->string('last_name', length: 60)->nullable();
-            $table->string('business_name', length: 60)->nullable();
-            $table->string('tax_address', length: 100)->nullable();
+            $table->string('business_name', length: 80)->nullable();
+            $table->string('tax_address', length: 120)->nullable();
 
             $table->foreignId('user_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();

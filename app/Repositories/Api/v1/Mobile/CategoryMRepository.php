@@ -10,7 +10,7 @@ class CategoryMRepository implements CategoryMInterface
 {
     public function getAllList(): Collection
     {
-        return Category::all();
+        return Category::orderBy('name', 'asc')->get();
     }
 
     public function getSubcategories(int $id): Collection

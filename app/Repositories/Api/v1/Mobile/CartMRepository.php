@@ -45,4 +45,41 @@ class CartMRepository implements CartMInterface
         $model->update($data);
         return $model->refresh();
     }
+
+    /**
+     * Marcar carrito como completado
+     */
+    public function markAsCompleted(Model $cart): void
+    {
+        $cart->update([
+            'status' => 'completed'
+        ]);
+    }
+
+    /**
+     * Validar stock del carrito
+     */
+    public function validateStock(Model $cart): array
+    {
+        $errors = [];
+
+        foreach ($cart->branchVariants as $item) {
+            $stockDisponible = $item->stock;
+            $cantidadSolicitada = $item->pivot->quantity;
+
+            if ($stockDisponible < $cantidadSolicitada) {
+                $productName = $item->variant->product->name ?? 'Producto';
+                $variantSku = $item->variant->sku ?? '';
+
+                $errors[] = [
+                    'product' => $productName,
+                    'sku' => $variantSku,
+                    'available' => $stockDisponible,
+                    'requested' => $cantidadSolicitada
+                ];
+            }
+        }
+
+        return $errors;
+    }
 }

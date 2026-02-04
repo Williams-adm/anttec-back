@@ -15,6 +15,7 @@ use App\Contracts\Api\v1\Admin\MovementInterface;
 use App\Contracts\Api\v1\Admin\OptionInterface;
 use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Contracts\Api\v1\Admin\OptionValueInterface;
+use App\Contracts\Api\v1\Admin\PaymentMethodInterface;
 use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Contracts\Api\v1\Admin\ProvinceInterface;
 use App\Contracts\Api\v1\Admin\SpecificationInterface;
@@ -35,6 +36,7 @@ use App\Repositories\Api\v1\Admin\MovementRepository;
 use App\Repositories\Api\v1\Admin\OptionProductRepository;
 use App\Repositories\Api\v1\Admin\OptionRepository;
 use App\Repositories\Api\v1\Admin\OptionValueRepository;
+use App\Repositories\Api\v1\Admin\PaymentMethodRepository;
 use App\Repositories\Api\v1\Admin\ProductRepository;
 use App\Repositories\Api\v1\Admin\ProvinceRepository;
 use App\Repositories\Api\v1\Admin\SpecificationRepository;
@@ -71,6 +73,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProvinceInterface::class, ProvinceRepository::class);
         $this->app->bind(DistrictInterface::class, DistrictRepository::class);
         $this->app->bind(UserInterface::class, UserRepository::class);
+        $this->app->bind(PaymentMethodInterface::class, PaymentMethodRepository::class);
     }
 
     /**

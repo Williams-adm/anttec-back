@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('movements', function (Blueprint $table) {
             $table->id();
+            $table->string('movement_number', length: 50)->unique()->nullable();
             $table->enum('type', ['inflow', 'outflow']);
             $table->enum('reason', ['sale', 'purchase', 'return', 'adjustment', 'transfer', 'other']);
             $table->string('detail_transaction')->nullable();
+            
+            $table->foreignId('order_id')->nullable()->constrained()
+                ->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
