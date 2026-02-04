@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\traits;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;

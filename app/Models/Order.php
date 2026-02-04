@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\OrderNumberGenerator;
+use App\traits\OrderNumberGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
