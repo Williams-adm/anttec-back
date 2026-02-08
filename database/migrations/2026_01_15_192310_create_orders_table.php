@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('total_discount', 10, 2)->default(0);
             $table->decimal('total', 12, 2);
             $table->enum('status', ['pending', 'paid', 'preparing', 'sending', 'ready', 'received', 'failed', 'returned', 'cancelled'])->default('pending');
+            $table->json('checkout_snapshot')->nullable();
 
             // Para ventas POS
             $table->foreignId('employee_id')->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();
@@ -28,7 +29,7 @@ return new class extends Migration
 
             // Relaciones principales
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete()->cascadeOnUpdate();
-            $table->foreignId('customer_id')->constrained('customers')->nullOnDelete()->cascadeOnUpdate();
+            $table->foreignId('customer_id')->nullable()->constrained('customers')->nullOnDelete()->cascadeOnUpdate();
             $table->foreignId('cart_id')->nullable()->constrained('carts')->nullOnDelete()->cascadeOnUpdate();
 
             // Índices

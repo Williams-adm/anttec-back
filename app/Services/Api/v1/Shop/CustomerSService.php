@@ -79,4 +79,15 @@ class CustomerSService
             'message' => 'RUC no encontrado',
         ];
     }
+
+    public function getOrCreate(string $documentNumber, string $documentType, array $customerData, int $userId)
+    {
+        $exists = $this->repository->findByDocumentNumber($documentNumber);
+        if (!$exists) {
+            $customer = $this->repository->create($customerData, $documentType, $documentNumber, $userId);
+            return $customer->id;
+        }
+
+        return $exists->documentable->id;
+    }
 }

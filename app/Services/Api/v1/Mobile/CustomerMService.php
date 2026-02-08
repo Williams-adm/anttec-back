@@ -3,9 +3,6 @@
 namespace App\Services\Api\v1\Mobile;
 
 use App\Contracts\Api\v1\Mobile\CustomerMInterface;
-use App\Models\Customer;
-use App\Models\DocumentNumber;
-use App\Models\DocumentType;
 use App\Services\Api\v1\integrations\SearchDNIService;
 use App\Services\Api\v1\integrations\SearchRUCService;
 

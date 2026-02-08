@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->enum('name', ['cash', 'card', 'yape', 'plin', 'transfers', 'deposits', 'others']);
+            $table->enum('name', ['cash', 'card', 'yape', 'plin', 'transfers', 'deposits', 'others', 'niubiz']);
             $table->enum('type', ['cash', 'card', 'wallet', 'other']);
             $table->boolean('required_qr')->default(false);
             $table->boolean('status')->default(true);

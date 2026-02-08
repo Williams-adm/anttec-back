@@ -42,4 +42,11 @@ class AddressSRepository implements AddressSInterface
         $model = $this->getById($id);
         return $model->delete();
     }
+
+    public function getByPrice(int $id): float
+    {
+        $model = $this->getById($id);
+
+        return $model->district?->shippingRate?->delivery_price ?? 0.0;
+    }
 }

@@ -9,7 +9,6 @@ class Shipment extends Model
 {
     protected $fillable = [
         'tracking_number',
-        'receiver',
         'receiver_info',
         'delivery_type',
         'shipment_cost',
@@ -17,6 +16,7 @@ class Shipment extends Model
         'dispatched_at',
         'delivered_at',
         'order_id',
+        'address_id',
         'shipping_company_id',
     ];
 

@@ -13,4 +13,5 @@ interface AddressSInterface
     public function create(array $data, Model $model): Model;
     public function update(array $data, int $id): Model;
     public function delete(int $id): bool;
+    public function getByPrice(int $id): float;
 }

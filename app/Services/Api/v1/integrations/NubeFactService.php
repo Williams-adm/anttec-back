@@ -8,14 +8,16 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class NubeFactService
 {
-    protected Client $client;
-
-    public function __construct()
+    protected function getClient(string $typeSale): Client
     {
-        $this->client = new Client([
+        $token = $typeSale === 'online'
+            ? config('integrations.nubefact.token_online')
+            : config('integrations.nubefact.token_store');
+
+        return new Client([
             'base_uri' => config('integrations.nubefact.base_url'),
             'headers'  => [
-                'Authorization' => 'Bearer ' . config('integrations.nubefact.token'),
+                'Authorization' => 'Bearer ' . $token,
                 'Accept'        => 'application/json',
                 'Content-Type'  => 'application/json',
             ],
@@ -29,9 +31,11 @@ class NubeFactService
     public function generateVoucher(Order $order, array $customerData, string $voucherType): array
     {
         try {
+            $client = $this->getClient($order->type_sale);
+
             $data = $this->prepareVoucherData($order, $customerData, $voucherType);
 
-            $response = $this->client->post('', [
+            $response = $client->post('', [
                 'json' => $data
             ]);
 
@@ -44,7 +48,6 @@ class NubeFactService
                 'success' => true,
                 'path' => $result['enlace_del_pdf'] ?? null
             ];
-
         } catch (GuzzleException $e) {
             return [
                 'success' => false,
@@ -66,7 +69,7 @@ class NubeFactService
         $tipoDocumento = $this->mapDocumentType($customerData['document_type']);
 
         // Generar serie según tipo de comprobante
-        $serie = $this->generateSerie($voucherType);
+        $serie = $this->generateSerie($voucherType, $order->type_sale);
 
         // Preparar items
         $items = [];
@@ -102,6 +105,9 @@ class NubeFactService
             ];
         }
 
+        $shipmentCost = $order->shipment_cost;
+        $total = $total + $shipmentCost;
+
         return [
             "operacion" => "generar_comprobante",
             "tipo_de_comprobante" => $tipoComprobante,
@@ -123,6 +129,7 @@ class NubeFactService
             "porcentaje_de_igv" => 18,
             "total_gravada" => round($totalGravada, 2),
             "total_igv" => round($totalIgv, 2),
+            "total_otros_cargos" => round($shipmentCost, 2),
             "total" => round($total, 2),
             "items" => $items,
         ];
@@ -156,12 +163,19 @@ class NubeFactService
     /**
      * Generar serie según tipo de comprobante
      */
-    protected function generateSerie(string $voucherType): string
+    protected function generateSerie(string $voucherType, string $typeSale): string
     {
+        if($typeSale === 'online') {
+            return match (strtolower($voucherType)) {
+                'factura' => config('integrations.nubefact.serie_factura_online', 'FFF1'),
+                'boleta' => config('integrations.nubefact.serie_boleta_online', 'BBB1'),
+                default => config('integrations.nubefact.serie_boleta_online', 'BBB1'),
+            };
+        }
         return match (strtolower($voucherType)) {
-            'factura' => config('integrations.nubefact.serie_factura', 'FFF1'),
-            'boleta' => config('integrations.nubefact.serie_boleta', 'BBB1'),
-            default => config('integrations.nubefact.serie_boleta', 'BBB1'),
+            'factura' => config('integrations.nubefact.serie_factura_store', 'FFF2'),
+            'boleta' => config('integrations.nubefact.serie_boleta_store', 'BBB2'),
+            default => config('integrations.nubefact.serie_boleta_store', 'BBB2'),
         };
     }
 

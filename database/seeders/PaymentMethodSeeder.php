@@ -14,6 +14,7 @@ class PaymentMethodSeeder extends Seeder
     public function run(): void
     {
         $methods = [
+            ['name' => 'niubiz',  'type' => 'other', 'required_qr' => false],
             ['name' => 'cash',  'type' => 'cash', 'required_qr' => false],
             ['name' => 'card',  'type' => 'card', 'required_qr' => false],
             ['name' => 'yape',  'type' => 'wallet', 'required_qr' => true],

@@ -26,4 +26,7 @@ interface CartSInterface
      * Cambiar estado carrito a merge
      */
     public function markAsMerged(Cart $model): Model;
+
+    public function markAsCompleted(Model $cart): void;
+    public function validateStock(Model $cart): array;
 }

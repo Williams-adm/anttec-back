@@ -85,4 +85,35 @@ class CartSRepository implements CartSInterface
     {
         return $this->update($cart->id, ['status' => 'merged']);
     }
+
+    public function markAsCompleted(Model $cart): void
+    {
+        $cart->update([
+            'status' => 'completed'
+        ]);
+    }
+
+    public function validateStock(Model $cart): array
+    {
+        $errors = [];
+
+        foreach ($cart->branchVariants as $item) {
+            $stockDisponible = $item->stock;
+            $cantidadSolicitada = $item->pivot->quantity;
+
+            if ($stockDisponible < $cantidadSolicitada) {
+                $productName = $item->variant->product->name ?? 'Producto';
+                $variantSku = $item->variant->sku ?? '';
+
+                $errors[] = [
+                    'product' => $productName,
+                    'sku' => $variantSku,
+                    'available' => $stockDisponible,
+                    'requested' => $cantidadSolicitada
+                ];
+            }
+        }
+
+        return $errors;
+    }
 }

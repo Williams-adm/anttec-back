@@ -27,7 +27,13 @@ class Order extends Model
         'user_id',
         'customer_id',
         'cart_id',
+        'checkout_snapshot',
     ];
+
+    protected $casts = [
+        'checkout_snapshot' => 'array',
+    ];
+
 
     public function employee(): BelongsTo
     {

@@ -30,7 +30,7 @@ class OrderMService
         protected NubeFactService $nubeFactService,
     ) {}
 
-    public function getAll(int $pagination = 15): LengthAwarePaginator
+    public function getAll(int $pagination = 16): LengthAwarePaginator
     {
         return $this->orderRepository->getAll($pagination);
     }
@@ -121,7 +121,7 @@ class OrderMService
                 'movement_number' => $order->order_number,
                 'type' => 'outflow',
                 'reason' => 'sale',
-                'detail_transaction' => 'Venta',
+                'detail_transaction' => 'Venta en tienda',
                 'order_id' => $order->id
             ]);
 
