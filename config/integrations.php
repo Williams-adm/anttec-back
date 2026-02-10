@@ -38,5 +38,14 @@ return [
         'merchant_id' => env('NIUBIZ_MERCHANT_ID'),
         'user' => env('NIUBIZ_USER'),
         'password' => env('NIUBIZ_PASSWORD'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Url de mi IA
+    |--------------------------------------------------------------------------
+    */
+    'ia' => [
+        'url_ia' => env('IA_API_URL'),
     ]
 ];

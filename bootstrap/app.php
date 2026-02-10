@@ -28,6 +28,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
 
+                Route::middleware('api')
+                ->prefix('api/v1/ia')
+                ->name('apiIa.')
+                ->group(base_path('routes/apiIa.php'));
+
             Route::middleware(['auth:sanctum',  'role:admin|employee'])
                 ->prefix('api/v1/mobile')
                 ->name('apiMobile.')
