@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->string('number', length: 14)->unique();
+            $table->string('number', length: 14);
             $table->morphs('phoneable');
 
             $table->foreignId('prefix_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->unique(['number', 'phoneable_type']);
 
             $table->timestamps();
         });

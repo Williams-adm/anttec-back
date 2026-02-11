@@ -83,6 +83,7 @@ class OrderSService
                     'shipment_cost' => $shipmentCost,
                     'total' => $total,
                     'status' => 'pending',
+                    'payment_status' => 'unpaid',
                     'branch_id' => $this->branchId,
                     'user_id' => $userId,
                     'cart_id' => $cart->id,

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Prefix;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,8 +18,8 @@ class UserSeeder extends Seeder
         $user = User::create([
             'name' => 'Jhonny Stevens',
             'last_name' => 'Romero Linares',
-            'email' => 'prueba@gmail.com',
-            'password' => Hash::make('12345678'),
+            'email' => 'anttecshop@gmail.com',
+            'password' => Hash::make('admin12R@'),
         ]);
 
         $employee = $user->employee()->create([
@@ -28,8 +29,15 @@ class UserSeeder extends Seeder
         ]);
 
         $employee->documentNumber()->create([
-            'number' => '12345678',
+            'number' => '71695916',
             'document_type_id' => 1
+        ]);
+
+        $preix = Prefix::first();
+
+        $employee->phone()->create([
+            'number' => 964645037,
+            'prefix_id' => $preix->id
         ]);
     }
 }

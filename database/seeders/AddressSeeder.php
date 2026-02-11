@@ -39,9 +39,9 @@ class AddressSeeder extends Seeder
 
         Branch::findOrFail(1)->address()->create([
             'favorite' => true,
-            'street' => 'Av. Giraldez',
+            'street' => 'Av. Giráldez NRO. 274 INT. T-2',
             'street_number' => 3202,
-            'reference' => 'Los girasoles',
+            'reference' => 'Centro de Negocios Giráldez',
             'district_id' => $district->id,
         ]);
     }

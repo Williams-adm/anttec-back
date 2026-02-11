@@ -39,7 +39,11 @@ class RecomendationIaController extends Controller
                 conversationId: $request->input('conversation_id')
             );
 
-            return response()->json($result);
+            return response()->json([
+                'status' => true,
+                'message' => 'Comunicación exitosa',
+                'data' => $result
+            ], 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Error al procesar la recomendación',

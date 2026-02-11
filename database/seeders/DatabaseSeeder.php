@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             DocumentTypeSeeder::class,
             UserSeeder::class,
-            CategorySeeder::class,
+            /* CategorySeeder::class,
             SubcategorySeeder::class,
             BrandSeeder::class,
-            SpecificationSeeder::class,
+            SpecificationSeeder::class, */
             AddressSeeder::class,
             PaymentMethodSeeder::class,
             RolePermissionSeeder::class,

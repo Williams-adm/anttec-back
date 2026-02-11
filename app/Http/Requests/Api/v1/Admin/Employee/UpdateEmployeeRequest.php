@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Api\v1\Admin\User;
+namespace App\Http\Requests\Api\v1\Admin\Employee;
 
 use App\Enums\Api\v1\Admin\EmployeePosition;
 use App\Enums\Api\v1\DocumentType;
+use App\Exceptions\Api\v1\NotFoundException;
 use App\Models\Employee;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class StoreUserRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,33 +27,41 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $employee = Employee::find($this->route('employee'));
+
         return [
             'name' => [
+                'sometimes',
                 'required',
                 'between:3, 50',
                 'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/'
             ],
             'last_name' => [
+                'sometimes',
                 'required',
                 'between:3, 65',
                 'regex:/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/'
             ],
             'email' => [
+                'sometimes',
                 'required',
                 'email:rfc,dns',
-                'unique:users,email'
+                Rule::unique('users', 'email')
+                    ->ignore($employee->user_id),
             ],
             'password' => [
+                'sometimes',
                 'required',
-                'confirmed',
                 Password::min(8)
             ],
             'date_birth' => [
+                'sometimes',
                 'nullable',
                 'date',
                 'before:today'
             ],
             'salary' => [
+                'sometimes',
                 'required',
                 'numeric:strict',
                 'decimal:2',
@@ -60,28 +69,53 @@ class StoreUserRequest extends FormRequest
                 'max:9999.99'
             ],
             'position' => [
+                'sometimes',
                 'required',
                 Rule::enum(EmployeePosition::class)
             ],
             'phone' => [
+                'sometimes',
                 'required',
                 'min:9',
                 'integer:strict',
-                'unique:phones,number',
+                Rule::unique('phones', 'number')
+                    ->where(fn($q) => $q->where('phoneable_type', Employee::class))
+                    ->ignore($this->route('employee'), 'phoneable_id'),
             ],
-            'document_type_id' => [
+            'document_type' => [
+                'sometimes',
                 'required',
-                'integer:strict',
-                'exists:document_types,id'
+                Rule::enum(DocumentType::class)
             ],
             'document_number' => [
+                'sometimes',
                 'required',
                 'integer:strict',
                 'min_digits:8',
                 'max_digits:15',
                 Rule::unique('document_numbers', 'number')
-                    ->where(fn($q) => $q->where('documentable_type', Employee::class)),
+                    ->where(fn($q) => $q->where('documentable_type', Employee::class))
+                    ->ignore($this->route('employee'), 'documentable_id'),
             ],
+            'status' => [
+                'sometimes',
+                'required',
+                'boolean:strict'
+            ]
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $id = $this->route('employee');
+        if (!Employee::find($id)) {
+            throw new NotFoundException();
+        }
+
+        if ($this->has('salary')) {
+            $this->merge([
+                'salary' => number_format((float) $this->input('salary'), 2, '.', ''),
+            ]);
+        }
     }
 }

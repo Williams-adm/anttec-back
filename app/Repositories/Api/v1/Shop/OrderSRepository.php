@@ -78,7 +78,8 @@ class OrderSRepository implements OrderSInterface
     public function markAsPaid(Model $order, int $customerId): void
     {
         $order->update([
-            'status' => 'paid',
+            'status' => 'confirmed',
+            'payment_status' => 'paid',
             'customer_id' => $customerId
         ]);
     }

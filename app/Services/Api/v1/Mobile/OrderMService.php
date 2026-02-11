@@ -95,7 +95,8 @@ class OrderMService
                 'subtotal' => $priceNoIgv,
                 'igv' => $igv,
                 'total' => $orderTotals,
-                'status' => 'received',
+                'status' => 'completed',
+                'payment_status' => 'paid',
                 'employee_id' => $employee->employee->id,
                 'customer_id' => $customerId,
                 'branch_id' => $this->branchId,
@@ -178,6 +179,17 @@ class OrderMService
 
             if (!$voucherResult['success']) {
                 // Log el error pero no fallar la transacción
+                $errorString = $voucherResult['error'];
+
+                // Buscar desde el primer {
+                $json = strstr($errorString, '{');
+
+                $error = json_decode($json, true);
+
+                throw new BadRequestException(
+                    $error['errors']
+                );
+
                 Log::error('Error generando comprobante NubeFact', [
                     'order_id' => $order->id,
                     'error' => $voucherResult['error']

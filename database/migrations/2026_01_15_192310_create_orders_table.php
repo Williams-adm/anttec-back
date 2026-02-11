@@ -20,7 +20,8 @@ return new class extends Migration
             $table->decimal('shipment_cost', 8, 2)->default(0);
             $table->decimal('total_discount', 10, 2)->default(0);
             $table->decimal('total', 12, 2);
-            $table->enum('status', ['pending', 'paid', 'preparing', 'sending', 'ready', 'received', 'failed', 'returned', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'confirmed', 'processing', 'ready', 'completed', 'cancelled', 'refunded'])->default('pending');
+            $table->enum('payment_status', ['unpaid', 'paid', 'refunded'])->default('unpaid');
             $table->json('checkout_snapshot')->nullable();
 
             // Para ventas POS

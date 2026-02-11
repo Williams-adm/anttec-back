@@ -4,7 +4,7 @@ namespace App\Enums\Api\v1\Admin;
 
 enum  EmployeePosition: string
 {
-    case ADMIN = 'admin';
+    case Admin = 'admin';
     case SELLER = 'seller';
     case CASHIER = 'cashier';
     case SUPPORT = 'support';
@@ -13,7 +13,7 @@ enum  EmployeePosition: string
     public function label(): string
     {
         return match ($this) {
-            self::ADMIN => 'Administrador',
+            self::Admin => 'Administrador',
             self::SELLER => 'Vendedor',
             self::CASHIER => 'Cajero',
             self::SUPPORT => 'Soporte',

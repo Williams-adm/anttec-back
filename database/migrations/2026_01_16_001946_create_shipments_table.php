@@ -17,9 +17,10 @@ return new class extends Migration
             $table->json('receiver_info');
             $table->enum('delivery_type', ['shipment', 'store_pickup']);
             $table->decimal('shipment_cost', 8, 2)->default(0);
-            $table->enum('status', ['pending','preparing','dispatched','in_transit','delivered','failed', 'ready_for_pickup'])->default('pending');
+            $table->enum('status', ['pending','preparing', 'ready_for_pickup', 'dispatched','in_transit','delivered', 'picked_up', 'failed', 'returned'])->default('pending');
             $table->timestamp('dispatched_at')->nullable();
             $table->timestamp('delivered_at')->nullable();
+            $table->text('notes')->nullable();
 
             $table->foreignId('order_id')->constrained()
                 ->cascadeOnDelete()->cascadeOnUpdate();

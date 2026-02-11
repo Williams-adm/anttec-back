@@ -34,7 +34,7 @@ class ProductIaResource extends JsonResource
             // Variantes con sus características
             'variants' => $this->variants->map(function ($variant) {
                 return [
-                    'id' => $variant->id,
+                    'id' => $variant->branches->first()->pivot->id,
                     'sku' => $variant->sku,
                     'price' => (float) $variant->selling_price,
 

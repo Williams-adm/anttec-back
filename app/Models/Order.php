@@ -22,6 +22,7 @@ class Order extends Model
         'total_discount',
         'total',
         'status',
+        'payment_status',
         'employee_id',
         'branch_id',
         'user_id',

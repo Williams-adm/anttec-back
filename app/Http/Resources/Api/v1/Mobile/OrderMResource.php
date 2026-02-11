@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\v1\Mobile;
 
+use App\Enums\Api\v1\PaymentMethodType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,7 @@ class OrderMResource extends JsonResource
             'time' => $this->created_at->format('H:i:s'),
             'total_items' => $this->orderDetails->sum('quantity'),
             'type_voucher' => $this->voucher->type,
-            'method_payment' => $this->paymentMethods->first()?->name,
+            'method_payment' => PaymentMethodType::from($this->paymentMethods->first()?->name)->label(),
             'voucher' => $this->voucher->path,
             'voucher_id' => $this->voucher->id,
         ];
