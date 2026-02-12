@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\v1\Admin\OrderController;
 use App\Http\Controllers\Api\v1\Admin\PaymentMethodController;
 use App\Http\Controllers\Api\v1\Admin\ProductController;
 use App\Http\Controllers\Api\v1\Admin\ProvinceController;
+use App\Http\Controllers\Api\v1\Admin\ReportController;
 use App\Http\Controllers\Api\v1\Admin\SaleController;
 use App\Http\Controllers\Api\v1\Admin\ShipmentController;
 use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
@@ -143,5 +144,13 @@ Route::controller(DashboardController::class)->prefix('dashboard')
             Route::get('/top-variants', 'getTopVariants')->name('dashboard.getTopVariants');
             Route::get('/top-categories', 'getTopCategories')->name('dashboard.getTopCategories');
             Route::get('/top-brands', 'getTopBrands')->name('dashboard.getTopBrands');
+        }
+    );
+
+Route::controller(ReportController::class)->prefix('reports')
+    ->group(
+        function () {
+            Route::post('/low-stock', 'lowStock')->name('reports.lowStock');
+            Route::post('/sales', 'sales')->name('reports.sales');
         }
     );
