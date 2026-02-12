@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('shipping_companies', function (Blueprint $table) {
             $table->id();
             $table->string('name', length: 80)->unique();
+            $table->string('phone', length: 9)->nullable();
             $table->string('email')->nullable();
             $table->string('district', length: 60);
             $table->string('street');
             $table->string('reference');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

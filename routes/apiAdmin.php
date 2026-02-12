@@ -14,10 +14,13 @@ use App\Http\Controllers\Api\v1\Admin\MovementController;
 use App\Http\Controllers\Api\v1\Admin\OptionController;
 use App\Http\Controllers\Api\v1\Admin\OptionProductController;
 use App\Http\Controllers\Api\v1\Admin\OptionValueController;
+use App\Http\Controllers\Api\v1\Admin\OrderController;
 use App\Http\Controllers\Api\v1\Admin\PaymentMethodController;
 use App\Http\Controllers\Api\v1\Admin\ProductController;
 use App\Http\Controllers\Api\v1\Admin\ProvinceController;
 use App\Http\Controllers\Api\v1\Admin\SaleController;
+use App\Http\Controllers\Api\v1\Admin\ShipmentController;
+use App\Http\Controllers\Api\v1\Admin\ShippingCompanyController;
 use App\Http\Controllers\Api\v1\Admin\SpecificationController;
 use App\Http\Controllers\Api\v1\Admin\SubcategoryController;
 use App\Http\Controllers\Api\v1\Admin\VariantBarcodeController;
@@ -27,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('customers', [CustomerController::class, 'getAll'])->name('customers.getAll');
 Route::get('payment-methods', [PaymentMethodController::class, 'getAllList'])->name('paymentmethods.getAllList');
 Route::post('variants/barcodes/generate', [VariantBarcodeController::class, 'generate'])->name('variantBarcodes.generate');
+Route::get('couriers/list', [ShippingCompanyController::class, 'getAllList'])->name('couriers.list');
 Route::get('categories/list', [CategoryController::class, 'getAllList'])->name('categories.list');
 Route::get('subcategories/list', [SubcategoryController::class, 'getAllList'])->name('subcategories.list');
 Route::get('brands/list', [BrandController::class, 'getAllList'])->name('brands.list');
@@ -65,7 +69,8 @@ Route::apiResources([
     'departments' => DepartmentController::class,
     'provinces' => ProvinceController::class,
     'districts' => DistrictController::class,
-    'employees' => EmployeeController::class
+    'employees' => EmployeeController::class,
+    'couriers' => ShippingCompanyController::class,
 ]);
 
 Route::controller(SaleController::class)->prefix('sales')
@@ -76,7 +81,24 @@ Route::controller(SaleController::class)->prefix('sales')
         }
     );
 
-    Route::controller(MovementController::class)->prefix('movements')
+Route::controller(OrderController::class)->prefix('orders')
+    ->group(
+        function () {
+            Route::get('/', 'index')->name('orders.index');
+            Route::get('/{id}/pdf', 'getPdf')->name('orders.getPdf');
+            Route::patch('/{id}', 'update')->name('orders.update');
+        }
+    );
+
+Route::controller(ShipmentController::class)->prefix('shipments')
+    ->group(
+        function () {
+            Route::get('/', 'index')->name('shipments.index');
+            Route::patch('/{id}', 'update')->name('shipments.update');
+        }
+    );
+
+Route::controller(MovementController::class)->prefix('movements')
     ->group(
         function () {
             Route::get('/', 'index')->name('movements.index');

@@ -82,5 +82,13 @@ class OrderSRepository implements OrderSInterface
             'payment_status' => 'paid',
             'customer_id' => $customerId
         ]);
+
+        Order::where('user_id', $order->user_id)
+            ->where('id', '!=', $order->id) // Importante: excluir la orden actual
+            ->where('status', 'pending')
+            ->update([
+                'status' => 'cancelled',
+                'checkout_snapshot' => null
+            ]);
     }
 }

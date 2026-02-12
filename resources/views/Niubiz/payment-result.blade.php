@@ -302,7 +302,7 @@
 
     <script>
         const redirectUrl = "{{ $redirectUrl }}";
-        let countdown = 5;
+        let countdown = 15;
 
         // Actualizar contador
         const countdownInterval = setInterval(() => {

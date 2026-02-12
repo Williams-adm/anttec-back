@@ -22,7 +22,7 @@ class AuthService
         }
 
         // Revocar tokens anteriores
-        $user->tokens()->delete();
+        /* $user->tokens()->delete(); */
 
         $token = $user->createToken('api-token')->plainTextToken;
 

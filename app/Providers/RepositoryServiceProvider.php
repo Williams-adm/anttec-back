@@ -17,10 +17,13 @@ use App\Contracts\Api\v1\Admin\MovementInterface;
 use App\Contracts\Api\v1\Admin\OptionInterface;
 use App\Contracts\Api\v1\Admin\OptionProductInterface;
 use App\Contracts\Api\v1\Admin\OptionValueInterface;
+use App\Contracts\Api\v1\Admin\OrderInterface;
 use App\Contracts\Api\v1\Admin\PaymentMethodInterface;
 use App\Contracts\Api\v1\Admin\ProductInterface;
 use App\Contracts\Api\v1\Admin\ProvinceInterface;
 use App\Contracts\Api\v1\Admin\SaleInterface;
+use App\Contracts\Api\v1\Admin\ShipmentInterface;
+use App\Contracts\Api\v1\Admin\ShippingCompanyInterface;
 use App\Contracts\Api\v1\Admin\SpecificationInterface;
 use App\Contracts\Api\v1\Admin\SubcategoryInterface;
 use App\Contracts\Api\v1\Admin\VariantInterface;
@@ -40,10 +43,13 @@ use App\Repositories\Api\v1\Admin\MovementRepository;
 use App\Repositories\Api\v1\Admin\OptionProductRepository;
 use App\Repositories\Api\v1\Admin\OptionRepository;
 use App\Repositories\Api\v1\Admin\OptionValueRepository;
+use App\Repositories\Api\v1\Admin\OrderRepository;
 use App\Repositories\Api\v1\Admin\PaymentMethodRepository;
 use App\Repositories\Api\v1\Admin\ProductRepository;
 use App\Repositories\Api\v1\Admin\ProvinceRepository;
 use App\Repositories\Api\v1\Admin\SaleRepository;
+use App\Repositories\Api\v1\Admin\ShipmentRepository;
+use App\Repositories\Api\v1\Admin\ShippingCompanyRepository;
 use App\Repositories\Api\v1\Admin\SpecificationRepository;
 use App\Repositories\Api\v1\Admin\SubcategoryRepository;
 use App\Repositories\Api\v1\Admin\VariantRepository;
@@ -80,6 +86,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SaleInterface::class, SaleRepository::class);
         $this->app->bind(EmployeeInterface::class, EmployeeRepository::class);
         $this->app->bind(CustomerInterface::class, CustomerRepository::class);
+        $this->app->bind(OrderInterface::class, OrderRepository::class);
+        $this->app->bind(ShipmentInterface::class, ShipmentRepository::class);
+        $this->app->bind(ShippingCompanyInterface::class, ShippingCompanyRepository::class);
     }
 
     /**

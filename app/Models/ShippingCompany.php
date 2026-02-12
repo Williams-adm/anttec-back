@@ -9,10 +9,16 @@ class ShippingCompany extends Model
 {
     protected $fillable = [
         'name',
+        'phone',
         'email',
         'district',
         'street',
         'reference',
+        'status'
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
     ];
 
     public function shipments(): HasMany
