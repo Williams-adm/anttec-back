@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Requests\Api\v1\Admin\District\StoreDistrictRequest;
 use App\Http\Requests\Api\v1\Admin\District\UpdateDistrictRequest;
+use App\Http\Requests\Api\v1\PaginationRequest;
 use App\Http\Resources\Api\v1\Admin\DistrictResource;
 use App\Http\Resources\Api\v1\Admin\DistrictShortResource;
 use App\Services\Api\v1\Admin\DistrictService;
@@ -19,10 +20,12 @@ class DistrictController extends BaseController
         parent::__construct($service, DistrictResource::class);
     }
 
-    public function index(): JsonResponse
+    public function index(PaginationRequest $request): JsonResponse
     {
+        $perPage = $request->validated()['per_page'] ?? 15;
+
         $array = DistrictShortResource::collection(
-            $this->service->getAll()
+            $this->service->getAll($perPage)
         )->response()->getData(true);
 
         return response()->json([

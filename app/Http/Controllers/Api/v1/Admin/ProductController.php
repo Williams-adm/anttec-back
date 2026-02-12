@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Requests\Api\v1\Admin\Product\StoreProductRequest;
 use App\Http\Requests\Api\v1\Admin\Product\UpdateProductRequest;
+use App\Http\Requests\Api\v1\PaginationRequest;
 use App\Http\Resources\Api\v1\Admin\ProductOptionsResource;
 use App\Http\Resources\Api\v1\Admin\ProductResource;
 use App\Http\Resources\Api\v1\Admin\ProductShortResource;
@@ -20,10 +21,12 @@ class ProductController extends BaseController
         parent::__construct($service, ProductResource::class);
     }
 
-    public function index(): JsonResponse
+    public function index(PaginationRequest $request): JsonResponse
     {
+        $perPage = $request->validated()['per_page'] ?? 15;
+
         $array = ProductShortResource::collection(
-            $this->service->getAll()
+            $this->service->getAll($perPage)
         )->response()->getData(true);
 
         return response()->json([

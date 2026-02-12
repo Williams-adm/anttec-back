@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\PaginationRequest;
 use App\Services\Api\v1\Admin\BaseService;
 use Illuminate\Http\JsonResponse;
 
@@ -27,10 +28,12 @@ abstract class BaseController extends Controller
     }
 
     //aqui deberia pasar el paginate
-    public function index(): JsonResponse
+    public function index(PaginationRequest $request): JsonResponse
     {
+        $perPage = $request->validated()['per_page'] ?? 15;
+
         $array = $this->resourceClass::collection(
-            $this->service->getAll()
+            $this->service->getAll($perPage)
         )->response()->getData(true);
 
         return response()->json([

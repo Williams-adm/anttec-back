@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\UpdateOrderRequest;
+use App\Http\Requests\Api\v1\PaginationRequest;
 use App\Http\Resources\Api\v1\Admin\OrderResource;
 use App\Services\Api\v1\Admin\OrderService;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ class OrderController extends Controller
         protected OrderService $service,
     ) {}
 
-    public function index(): JsonResponse
+    public function index(PaginationRequest $request): JsonResponse
     {
+        $perPage = $request->validated()['per_page'] ?? 15;
+
         $array = OrderResource::collection(
-            $this->service->getAll()
+            $this->service->getAll($perPage)
         )->response()->getData(true);
 
         return response()->json([
