@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\v1\Admin\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\CountryController;
 use App\Http\Controllers\Api\v1\Admin\CoverController;
 use App\Http\Controllers\Api\v1\Admin\CustomerController;
+use App\Http\Controllers\Api\v1\Admin\DashboardController;
 use App\Http\Controllers\Api\v1\Admin\DepartmentController;
 use App\Http\Controllers\Api\v1\Admin\DistrictController;
 use App\Http\Controllers\Api\v1\Admin\EmployeeController;
@@ -131,5 +132,16 @@ Route::controller(OptionProductController::class)->prefix('option-products')
             Route::post('/values', 'addValues')->name('optionProducts.addValues');
             Route::get('/{id}', 'show')->name('optionProducts.show');
             Route::get('/{productId}/values/{optionId}', 'getAllValues')->name('optionProducts.getAllValues');
+        }
+    );
+
+Route::controller(DashboardController::class)->prefix('dashboard')
+    ->group(
+        function () {
+            Route::get('/stats', 'getStats')->name('dashboard.getStats');
+            Route::get('/sales-chart', 'getSalesChart')->name('dashboard.getSalesChart');
+            Route::get('/top-variants', 'getTopVariants')->name('dashboard.getTopVariants');
+            Route::get('/top-categories', 'getTopCategories')->name('dashboard.getTopCategories');
+            Route::get('/top-brands', 'getTopBrands')->name('dashboard.getTopBrands');
         }
     );

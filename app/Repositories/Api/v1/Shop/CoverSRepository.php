@@ -10,6 +10,6 @@ class CoverSRepository implements CoverSInterface
 {
     public function getAll(): Collection
     {
-        return Cover::orderBy('order', 'asc')->get();
+        return Cover::orderBy('order', 'asc')->where('status', true)->get();
     }
 }

@@ -146,6 +146,10 @@
                 <span class="info-value">{{ $order->branch->name ?? 'N/A' }}</span>
             @else
                 <span class="badge badge-shipment">ENVÍO A DOMICILIO</span>
+                <br>
+                Domicilio: <span class="info-value">{{ $address->street ?? 'N/A' }}</span>
+                <br>
+                Referencia: <span class="info-value">{{ $address->reference ?? 'N/A' }}</span>
             @endif
         </div>
     </div>

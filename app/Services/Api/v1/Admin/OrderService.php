@@ -4,6 +4,7 @@ namespace App\Services\Api\v1\Admin;
 
 use App\Contracts\Api\v1\Admin\OrderInterface;
 use App\Exceptions\Api\v1\NotFoundException;
+use App\Models\Address;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -29,9 +30,13 @@ class OrderService
 
         $order->load(['branchVariants','voucher']);
 
+        $addressId = $order->checkout_snapshot['address_id'];
+        $address = Address::withTrashed()->findOrFail($addressId);;
+
         // Generar PDF
         $pdf = Pdf::loadView('Admin.pdfs.order-packing', [
-            'order' => $order
+            'order' => $order,
+            'address' => $address
         ]);
 
         // Configuración del PDF
